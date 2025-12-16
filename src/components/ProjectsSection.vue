@@ -5,29 +5,62 @@
       <div class="project-content">
         <img v-if="project.image" :src="project.image" :alt="project.title" class="project-image" />
         <div class="project-details">
-          <p>{{ project.content }}</p>
+          <p>{{ project.description }}</p>
           <a v-if="project.link" :href="project.link" target="_blank" rel="noopener noreferrer" class="project-link">
             View Project <i class="fas fa-external-link-alt"></i>
           </a>
         </div>
-      </div>
+    </div>
     </GlassCard>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import GlassCard from './GlassCard.vue';
 
-const projects = ref([
-      {
-        id: 1,
-        title: 'SnapChef',
-        content: 'Turn your ingredients into delicious meals instantly with AI-powered recipe discovery. SnapChef is your smart kitchen assistant that helps you reduce food waste and cook creative meals with what you already have.',
-        image: 'https://raw.githubusercontent.com/praveen-pravi6B/SnapChef/main/src/assets/logo.png',
-        link: 'https://snap-chef-khaki.vercel.app/'
-      }
-]);
+const googleSheetCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxFWwjf1vyxRQiaLkdsl-OomxIPYHLdCNNNqtsnjj-wswqT0SiiHOT8lW4tNAvqIHxDuNiCpK-LW6U/pub?gid=0&single=true&output=csv';
+
+const projects = ref([]);
+const loading = ref(true);
+const error = ref(null);
+
+const parseCsv = (csvText) => {
+  const lines = csvText.trim().split('\n');
+  if (lines.length === 0) return [];
+
+  const headers = lines[0].split(',').map(header => header.trim());
+  const data = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const values = lines[i].split(',').map(value => value.trim());
+    const entry = {
+      id: i,
+    };
+    headers.forEach((header, index) => {
+      entry[header] = values[index];
+    });
+    data.push(entry);
+  }
+  return data;
+};
+
+onMounted(async () => {
+  try {
+    const response = await fetch(googleSheetCsvUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const csvText = await response.text();
+    projects.value = parseCsv(csvText);
+    console.log("parseCsv", parseCsv(csvText));
+  } catch (err) {
+    error.value = err.message;
+    console.error("Failed to fetch Google Sheet data:", err);
+  } finally {
+    loading.value = false;
+  }
+});
 </script>
 
 <style scoped>
@@ -37,6 +70,17 @@ const projects = ref([
   margin-bottom: 1.5rem;
   padding-left: 1rem;
   border-left: 4px solid var(--primary-blue);
+}
+
+.loading-message, .error-message {
+  color: var(--medium-text);
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+.error-message {
+  color: #ff5f56;
 }
 
 p {
