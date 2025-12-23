@@ -23,7 +23,14 @@ import ContactSection from './components/ContactSection.vue';
   padding: 0 2rem 2rem;
   width: 100%;
   max-width: 900px;
+  max-width: 900px;
   margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 0 1rem 1rem;
+  }
 }
 
 /* Add some space between sections */
