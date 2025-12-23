@@ -51,4 +51,33 @@ import SocialLinks from './SocialLinks.vue';
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(25, 118, 210, 0.3);
 }
+
+@media (max-width: 768px) {
+  .intro-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .intro-text p {
+    font-size: 1.1rem;
+  }
+  
+  .home-section {
+    height: 70vh;
+  }
+}
+
+@media (max-width: 375px) {
+  .intro-text h1 {
+    font-size: 2rem;
+  }
+  
+  .intro-text p {
+    font-size: 1rem;
+  }
+  
+  .cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
 </style>

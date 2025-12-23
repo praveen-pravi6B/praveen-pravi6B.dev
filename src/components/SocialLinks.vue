@@ -49,4 +49,18 @@ const socials = ref([
   color: var(--primary-blue);
   transform: scale(1.1);
 }
+
+@media (max-width: 600px) {
+  .social-links {
+    gap: 1rem;
+  }
+  
+  .social-links i {
+    font-size: 1.5rem;
+  }
+  
+  .social-links a {
+    font-size: 1.2rem;
+  }
+}
 </style>
