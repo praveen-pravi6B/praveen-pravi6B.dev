@@ -2,7 +2,7 @@
   <nav class="navbar">
     <div class="nav-left">
       <a href="#" class="nav-logo">
-        <img src="/favicon.png" alt="Portfolio Logo" class="logo-image" />
+        <img src="/logo.png" alt="Portfolio Logo" class="logo-image" />
       </a>
     </div>
     
