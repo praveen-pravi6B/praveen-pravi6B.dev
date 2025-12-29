@@ -30,19 +30,10 @@ const isMenuOpen = ref(false);
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
-  if (isMenuOpen.value) {
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
-  }
 };
 
 const closeMenu = () => {
   isMenuOpen.value = false;
-  document.body.style.overflow = '';
-  document.documentElement.style.overflow = '';
 };
 </script>
 
@@ -138,7 +129,7 @@ const closeMenu = () => {
   .nav-right {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
     height: 100vh;
     width: 70%;
     max-width: 300px;
@@ -147,14 +138,17 @@ const closeMenu = () => {
     flex-direction: column;
     padding: 5rem 2rem 2rem;
     gap: 2rem;
-    transition: right 0.3s ease;
+    transition: all 0.3s ease;
     border-left: 1px solid rgba(25, 118, 210, 0.2);
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
     overflow-y: auto; /* Allow menu content to scroll if needed */
+    visibility: hidden;
+    opacity: 0;
   }
 
   .nav-right.active {
-    right: 0;
+    visibility: visible;
+    opacity: 1;
   }
 
   .nav-link {

@@ -44,22 +44,15 @@ body {
   align-items: center;
 }
 
-/* Scrollbar styling */
-body::-webkit-scrollbar {
-  width: 10px;
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none;
 }
 
-body::-webkit-scrollbar-track {
-  background: var(--dark-bg);
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: var(--primary-blue);
-  border-radius: 5px;
-  border: 2px solid var(--dark-bg);
-}
-
-body::-webkit-scrollbar-thumb:hover {
-  background-color: #42a5f5;
-  /* Lighter blue on hover */
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
