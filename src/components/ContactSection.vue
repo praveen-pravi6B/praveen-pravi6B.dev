@@ -46,4 +46,12 @@ p {
     background-color: var(--primary-blue);
     color: var(--light-text);
 }
+
+@media (max-width: 600px) {
+    .email-link {
+        font-size: 0.9rem;
+        padding: 0.8rem 1rem;
+        word-break: break-all;
+    }
+}
 </style>

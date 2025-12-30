@@ -85,6 +85,30 @@ const tools = ref([
   gap: 2rem;
 }
 
+@media (max-width: 600px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .skill-category h3 {
+    font-size: 1.1rem;
+  }
+  
+  .skill-category li {
+    font-size: 1rem;
+  }
+  
+  .skill-category li i {
+    font-size: 1.5rem;
+  }
+  
+  .skill-icon-img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
 .skill-category h3 {
   color: var(--light-text);
   font-size: 1.2rem;

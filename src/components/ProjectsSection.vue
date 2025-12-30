@@ -135,8 +135,30 @@ p {
     text-align: center;
   }
 
+  .project-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    aspect-ratio: 16/9;
+    margin-bottom: 1rem;
+  }
+
   .project-details {
     align-items: center;
+  }
+  
+  .project-link {
+    align-self: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .project-image {
+    max-width: 100%;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
   }
 }
 

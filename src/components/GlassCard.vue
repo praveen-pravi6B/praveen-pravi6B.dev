@@ -38,4 +38,10 @@ defineProps({
   padding: 1.5rem;
   line-height: 1.7;
 }
+
+@media (max-width: 600px) {
+  .card-content {
+    padding: 1rem;
+  }
+}
 </style>
