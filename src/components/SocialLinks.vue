@@ -1,6 +1,6 @@
 <template>
   <div class="social-links">
-    <a v-for="social in socials" :key="social.name" :href="social.url" target="_blank" rel="noopener noreferrer" :aria-label="social.name">
+    <a v-for="social in socials" :key="social.name" :href="social.url" target="_blank" rel="noopener noreferrer" :aria-label="social.name" @click="trackClick(social.name)">
       <i :class="social.icon"></i>
     </a>
   </div>
@@ -8,6 +8,14 @@
 
 <script setup>
 import { ref } from 'vue';
+
+const trackClick = (socialName) => {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'social_click', {
+      'social_platform': socialName
+    });
+  }
+};
 
 const socials = ref([
   { name: 'GitHub', url: 'https://github.com/praveen-pravi6B', icon: 'fab fa-github' },
