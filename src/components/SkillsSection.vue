@@ -46,7 +46,8 @@ const languages = ref([
   { name: 'JavaScript', icon: 'devicon-javascript-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
   { name: 'TypeScript', icon: 'devicon-typescript-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
   { name: 'Java', icon: 'devicon-java-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
-  { name: 'Shell/Bash', icon: 'devicon-bash-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg' },
+  { name: 'Bash', icon: 'devicon-bash-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg' },
+  { name: 'MySQL', icon: 'devicon-mysql-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
   { name: 'HTML5', icon: 'devicon-html5-plain', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg' },
   { name: 'CSS3', icon: 'devicon-css3-plain', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg' },
 ]);
@@ -67,6 +68,10 @@ const tools = ref([
   { name: 'Firebase', icon: 'devicon-firebase-plain', imgSrc: 'https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg' },
   { name: 'Vercel', icon: 'devicon-vercel-original', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/vercel/vercel-original.svg' },
   { name: 'Linux', icon: 'devicon-linux-plain', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg' },
+  { name: 'Cloudflare', icon: 'devicon-cloudflare-plain', imgSrc: 'https://www.vectorlogo.zone/logos/cloudflare/cloudflare-icon.svg' },
+  { name: 'Google Analytics', icon: 'devicon-googleanalytics-plain', imgSrc: 'https://www.vectorlogo.zone/logos/google_analytics/google_analytics-icon.svg' },
+  { name: 'Algolia', icon: 'devicon-algolia-plain', imgSrc: 'https://www.vectorlogo.zone/logos/algolia/algolia-icon.svg' },
+  { name: 'SSH', icon: 'devicon-ssh-plain', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/ssh/ssh-original-wordmark.svg' },
 ]);
 </script>
 
