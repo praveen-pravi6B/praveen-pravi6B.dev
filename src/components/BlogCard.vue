@@ -27,7 +27,10 @@
            @error="e => e.target.parentElement.style.display='none'" />
     </div>
     <div class="bc-img-wrap bc-img-placeholder" v-else>
-      <span>✍️</span>
+      <div class="bc-default-cover">
+        <span class="bc-cover-initial">{{ (post.title || '').charAt(0) }}</span>
+        <span class="bc-cover-title">{{ (post.title || '').split(' ').slice(0, 3).join(' ') }}</span>
+      </div>
     </div>
 
     <div class="bc-body">
@@ -90,7 +93,43 @@ defineProps({
 .bc-img-placeholder {
   background: var(--bg2);
   display: flex; align-items: center; justify-content: center;
-  font-size: 2rem;
+  position: relative; overflow: hidden;
+}
+
+/* Styled default cover */
+.bc-default-cover {
+  position: absolute; inset: 0;
+  background: var(--grad);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: .5rem; padding: 1.5rem;
+  /* subtle noise texture via SVG */
+  background-image: var(--grad),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
+}
+.bc-cover-initial {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(255,255,255,.25);
+  line-height: 1;
+  letter-spacing: -.05em;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  user-select: none;
+  font-size: 6rem;
+}
+.bc-cover-title {
+  position: relative; z-index: 1;
+  font-size: .78rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.9);
+  text-align: center;
+  line-height: 1.35;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  max-width: 80%;
 }
 
 .bc-body { padding: 1.2rem; display: flex; flex-direction: column; gap: .6rem; flex: 1; }
