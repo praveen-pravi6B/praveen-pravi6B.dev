@@ -5,10 +5,10 @@
     </a>
     <div class="nav-right">
       <div class="nav-links">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#blog" class="nav-link">Blog</a>
+        <a href="/#about" class="nav-link">About</a>
+        <a href="/#skills" class="nav-link">Skills</a>
+        <a href="/#projects" class="nav-link">Projects</a>
+        <RouterLink to="/blog" class="nav-link">Blog</RouterLink>
       </div>
       <ThemeSwitcher />
       <a href="#contact" class="nav-cta">Let's talk</a>
@@ -21,10 +21,10 @@
 
     <!-- Mobile drawer -->
     <div class="mobile-drawer" :class="{ open: menuOpen }">
-      <a href="#about"    class="m-link" @click="menuOpen = false">About</a>
-      <a href="#skills"   class="m-link" @click="menuOpen = false">Skills</a>
-      <a href="#projects" class="m-link" @click="menuOpen = false">Projects</a>
-      <a href="#blog"     class="m-link" @click="menuOpen = false">Blog</a>
+      <a href="/#about"    class="m-link" @click="menuOpen = false">About</a>
+      <a href="/#skills"   class="m-link" @click="menuOpen = false">Skills</a>
+      <a href="/#projects" class="m-link" @click="menuOpen = false">Projects</a>
+      <RouterLink to="/blog" class="m-link" @click="menuOpen = false">Blog</RouterLink>
       <a href="#contact"  class="m-cta"  @click="menuOpen = false">Let's talk</a>
     </div>
   </nav>
