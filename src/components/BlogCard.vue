@@ -20,7 +20,7 @@
   </div>
 
   <!-- Real card -->
-  <article v-else class="blog-card">
+  <article v-else class="blog-card" :class="{ 'blog-card-list': list }">
     <!-- Cover image -->
     <div class="bc-img-wrap" v-if="post.image">
       <img :src="post.image" :alt="post.title" class="bc-img"
@@ -68,6 +68,7 @@
 defineProps({
   post: { type: Object, default: () => ({}) },
   skeleton: { type: Boolean, default: false },
+  list: { type: Boolean, default: false },
 })
 </script>
 
@@ -166,6 +167,26 @@ defineProps({
   transition: all .2s; color: var(--muted);
 }
 .bc-ext-btn:hover { border-color: var(--a2); color: var(--a2); }
+
+/* ── List / horizontal variant ─────── */
+.blog-card-list {
+  flex-direction: row;
+  align-items: stretch;
+}
+.blog-card-list .bc-img-wrap {
+  width: 220px;
+  height: auto;
+  flex-shrink: 0;
+  border-radius: var(--r) 0 0 var(--r);
+}
+.blog-card-list .bc-body {
+  flex: 1;
+  padding: 1.4rem 1.6rem;
+}
+@media (max-width: 600px) {
+  .blog-card-list { flex-direction: column; }
+  .blog-card-list .bc-img-wrap { width: 100%; height: 180px; border-radius: var(--r) var(--r) 0 0; }
+}
 
 /* ── Skeleton ───────────────────────── */
 @keyframes shimmer {
