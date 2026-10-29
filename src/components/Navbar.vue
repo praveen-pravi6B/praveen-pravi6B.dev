@@ -141,7 +141,12 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 .hamburger span {
   display: block; width: 22px; height: 2px;
-  background: var(--text); border-radius: 2px; transition: all .3s;
+  background: rgba(255,255,255,.85); /* always white — works on dark navbars */
+  border-radius: 2px; transition: all .3s;
+}
+/* Minimal before scroll — nav is white, so use dark spans */
+.theme-minimal:not(.scrolled) .hamburger span {
+  background: rgba(0,0,0,.75);
 }
 .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
 .hamburger.open span:nth-child(2) { opacity: 0; }

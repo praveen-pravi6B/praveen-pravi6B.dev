@@ -458,7 +458,7 @@ section { padding: 6rem 0; }
 /* Minimal nav border — same 1px as dark, just different color */
 [data-theme="minimal"] nav { border-bottom-width: 1px !important; }
 
-/* Minimal — default white nav: dark text on light switcher */
+/* Minimal unscrolled — white nav, override switcher to dark */
 [data-theme="minimal"] .navbar:not(.scrolled) .theme-switcher {
   border-color: #d0d0d0;
   background: #f0f0f0;
@@ -468,7 +468,6 @@ section { padding: 6rem 0; }
 [data-theme="minimal"] .navbar:not(.scrolled) .t-btn.active {
   background: #fff; color: #111; box-shadow: 0 1px 4px rgba(0,0,0,.1);
 }
-/* Minimal scrolled — dark glass, use default light text (from component) */
 
 /* ─── HERO NAME STROKE (brutalist only) ─ */
 [data-theme="brutalist"] .hero-name .stroke {

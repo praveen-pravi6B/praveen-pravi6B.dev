@@ -39,8 +39,8 @@ const dots = {
   display: flex;
   align-items: center;
   gap: 2px;
-  background: var(--switcher-bg, rgba(255,255,255,.06));
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
   border-radius: 999px;
   padding: 3px;
 }
@@ -56,7 +56,6 @@ const dots = {
   cursor: pointer;
   font-size: .72rem;
   font-weight: 600;
-  /* Always light — switcher lives on dark navbars by default */
   color: rgba(255,255,255,.55);
   transition: all .2s;
   font-family: inherit;
@@ -66,7 +65,7 @@ const dots = {
 .t-btn:hover { color: rgba(255,255,255,.9); }
 
 .t-btn.active {
-  background: var(--switcher-active, rgba(255,255,255,.12));
+  background: rgba(255,255,255,.15);
   color: #fff;
 }
 
@@ -77,8 +76,24 @@ const dots = {
   flex-shrink: 0;
 }
 
-@media (max-width: 768px) {
+/* Desktop: hide names on small screens */
+@media (max-width: 900px) {
   .t-name { display: none; }
   .t-btn { padding: 5px 8px; }
 }
+
+/* Inside mobile drawer: always show names, bigger touch targets */
+.m-theme .theme-switcher {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.15);
+  border-radius: 16px;
+  padding: 6px;
+  gap: 4px;
+}
+.m-theme .t-btn {
+  padding: 8px 14px;
+  font-size: .82rem;
+}
+.m-theme .t-name { display: inline; }
+.m-theme .t-btn.active { background: rgba(255,255,255,.2); }
 </style>
