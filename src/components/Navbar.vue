@@ -10,7 +10,7 @@
         <a href="/#projects" class="nav-link">Projects</a>
         <RouterLink to="/blog" class="nav-link">Blog</RouterLink>
       </div>
-      <ThemeSwitcher />
+      <div class="theme-switcher-wrap"><ThemeSwitcher /></div>
       <a href="#contact" class="nav-cta">Let's talk</a>
     </div>
 
@@ -19,15 +19,23 @@
       <span /><span /><span />
     </button>
 
-    <!-- Mobile drawer -->
+  </nav>
+
+  <!-- Teleported to body so backdrop-filter on nav doesn't clip it -->
+  <Teleport to="body">
     <div class="mobile-drawer" :class="{ open: menuOpen }">
+      <button class="m-close" @click="menuOpen = false" aria-label="Close">✕</button>
       <a href="/#about"    class="m-link" @click="menuOpen = false">About</a>
       <a href="/#skills"   class="m-link" @click="menuOpen = false">Skills</a>
       <a href="/#projects" class="m-link" @click="menuOpen = false">Projects</a>
       <RouterLink to="/blog" class="m-link" @click="menuOpen = false">Blog</RouterLink>
-      <a href="#contact"  class="m-cta"  @click="menuOpen = false">Let's talk</a>
+      <a href="/#contact"  class="m-cta"  @click="menuOpen = false">Let's talk</a>
+      <!-- Theme switcher inside drawer -->
+      <div class="m-theme">
+        <ThemeSwitcher />
+      </div>
     </div>
-  </nav>
+  </Teleport>
 </template>
 
 <script setup>
@@ -139,24 +147,40 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
-/* ── Mobile drawer ──────────────────────── */
+/* ── Mobile drawer (teleported to body) ─── */
 .mobile-drawer {
-  position: fixed; inset: 0; z-index: 150;
+  position: fixed; inset: 0; z-index: 9999;
   background: rgba(5,5,8,.97); backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 2rem; opacity: 0; pointer-events: none; transition: opacity .3s;
 }
 .mobile-drawer.open { opacity: 1; pointer-events: all; }
-.m-link { font-size: 1.6rem; font-weight: 700; color: rgba(255,255,255,.6); transition: color .2s; }
+
+.m-close {
+  position: absolute; top: 1.2rem; right: 1.5rem;
+  background: transparent; border: none; cursor: pointer;
+  font-size: 1.4rem; color: rgba(255,255,255,.5);
+  transition: color .2s; line-height: 1;
+}
+.m-close:hover { color: #fff; }
+
+.m-link { font-size: 1.6rem; font-weight: 700; color: rgba(255,255,255,.6); transition: color .2s; text-decoration: none; }
 .m-link:hover { color: #fff; }
 .m-cta {
   font-size: 1rem; font-weight: 600;
   background: var(--grad); color: #fff;
-  padding: .8rem 2rem; border-radius: 999px;
+  padding: .8rem 2rem; border-radius: 999px; text-decoration: none;
 }
+.m-theme { margin-top: .5rem; }
 
 @media (max-width: 768px) {
+  /* Hide everything in nav-right — links, switcher, cta */
   .nav-right { display: none; }
   .hamburger { display: flex; }
+}
+/* Theme switcher: desktop only always */
+@media (max-width: 900px) {
+  .theme-switcher-wrap { display: none; }
 }
 </style>
