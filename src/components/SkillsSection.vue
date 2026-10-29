@@ -1,165 +1,71 @@
 <template>
-  <section id="skills">
-    <h2 class="section-title">Skills</h2>
-    <GlassCard>
-      <div class="skills-grid">
-        <div class="skill-category">
-          <h3>Languages</h3>
-          <ul>
-            <li v-for="skill in languages" :key="skill.name">
-              <img v-if="skill.imgSrc" :src="skill.imgSrc" :alt="skill.name" class="skill-icon-img" />
-              <i v-else :class="skill.icon"></i>
-              {{ skill.name }}
-            </li>
-          </ul>
-        </div>
-        <div class="skill-category">
-          <h3>Frameworks & Libraries</h3>
-          <ul>
-            <li v-for="skill in frameworks" :key="skill.name">
-              <img v-if="skill.imgSrc" :src="skill.imgSrc" :alt="skill.name" class="skill-icon-img" />
-              <i v-else :class="skill.icon"></i>
-              {{ skill.name }}
-            </li>
-          </ul>
-        </div>
-        <div class="skill-category">
-          <h3>Tools & Platforms</h3>
-          <ul>
-            <li v-for="skill in tools" :key="skill.name">
-              <img v-if="skill.imgSrc" :src="skill.imgSrc" :alt="skill.name" class="skill-icon-img" />
-              <i v-else :class="skill.icon"></i>
-              {{ skill.name }}
-            </li>
-          </ul>
-        </div>
+  <section id="skills" class="skills-section">
+    <div class="container">
+      <div class="sec-tag">Skills</div>
+      <h2 class="sec-h">What I <span class="grad-text">work with</span></h2>
+    </div>
+
+    <!-- Row 1 marquee -->
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span v-for="s in [...row1, ...row1]" :key="s + Math.random()" class="sk-pill">
+          <span class="sk-dot"></span>{{ s }}
+        </span>
       </div>
-    </GlassCard>
+    </div>
+
+    <!-- Row 2 reverse -->
+    <div class="marquee-wrap" style="margin-top:.7rem">
+      <div class="marquee-track rev">
+        <span v-for="s in [...row2, ...row2]" :key="s + Math.random()" class="sk-pill">
+          <span class="sk-dot"></span>{{ s }}
+        </span>
+      </div>
+    </div>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import GlassCard from './GlassCard.vue';
-
-const languages = ref([
-  { name: 'JavaScript', icon: 'devicon-javascript-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-  { name: 'TypeScript', icon: 'devicon-typescript-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
-  { name: 'Java', icon: 'devicon-java-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
-  { name: 'Bash', icon: 'devicon-bash-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg' },
-  { name: 'MySQL', icon: 'devicon-mysql-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
-  { name: 'HTML5', icon: 'devicon-html5-plain', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg' },
-  { name: 'CSS3', icon: 'devicon-css3-plain', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg' },
-]);
-
-const frameworks = ref([
-  { name: 'Vue.js', icon: 'devicon-vuejs-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
-  { name: 'React', icon: 'devicon-react-original', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-  { name: 'Next.js', icon: 'devicon-nextjs-original', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
-  { name: 'Node.js', icon: 'devicon-nodejs-plain', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
-  { name: 'Express', icon: 'devicon-express-original', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
-  { name: 'Astro', icon: 'devicon-astro-original', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg' },
-]);
-
-const tools = ref([
-  { name: 'Figma', icon: 'devicon-figma-plain', imgSrc: 'https://www.vectorlogo.zone/logos/figma/figma-icon.svg' },
-  { name: 'Docker', icon: 'devicon-docker-plain', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg' },
-  { name: 'GitHub', icon: 'devicon-github-original', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg' },
-  { name: 'Firebase', icon: 'devicon-firebase-plain', imgSrc: 'https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg' },
-  { name: 'Vercel', icon: 'devicon-vercel-original', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/vercel/vercel-original.svg' },
-  { name: 'Linux', icon: 'devicon-linux-plain', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg' },
-  { name: 'Cloudflare', icon: 'devicon-cloudflare-plain', imgSrc: 'https://www.vectorlogo.zone/logos/cloudflare/cloudflare-icon.svg' },
-  { name: 'Google Analytics', icon: 'devicon-googleanalytics-plain', imgSrc: 'https://www.vectorlogo.zone/logos/google_analytics/google_analytics-icon.svg' },
-  { name: 'Algolia', icon: 'devicon-algolia-plain', imgSrc: 'https://www.vectorlogo.zone/logos/algolia/algolia-icon.svg' },
-  { name: 'SSH', icon: 'devicon-ssh-plain', imgSrc: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/ssh/ssh-original-wordmark.svg' },
-]);
+const row1 = ['JavaScript','TypeScript','Vue 3','React','Next.js','Node.js','Python','FastAPI','HTML5','CSS3','Astro','Express']
+const row2 = ['Playwright','Vite','Docker','GitHub','Figma','Firebase','SQLite','llama.cpp','BirdNET ONNX','Zod','HuggingFace','Gemini API']
 </script>
 
 <style scoped>
-.section-title {
-  font-size: 2rem;
-  color: var(--light-text);
-  margin-bottom: 1.5rem;
-  padding-left: 1rem;
-  border-left: 4px solid var(--primary-blue);
+.skills-section { padding: 5rem 0; overflow: hidden; }
+
+.marquee-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.marquee-wrap::before, .marquee-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+}
+.marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+.marquee-wrap::after  { right: 0; background: linear-gradient(to left,  var(--bg), transparent); }
+
+.marquee-track {
+  display: flex; gap: .7rem; width: max-content;
+  animation: marquee 30s linear infinite;
+  padding: .3rem 0;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-track.rev { animation-direction: reverse; animation-duration: 24s; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
+.sk-pill {
+  white-space: nowrap; display: inline-flex; align-items: center; gap: .5rem;
+  padding: .45rem 1.1rem; border-radius: 999px; font-size: .82rem; font-weight: 500;
+  border: 1px solid rgba(99,102,241,.25); background: rgba(99,102,241,.07);
+  color: var(--text); transition: all .2s; cursor: default;
 }
-
-@media (max-width: 600px) {
-  .skills-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
-  .skill-category h3 {
-    font-size: 1.1rem;
-  }
-  
-  .skill-category li {
-    font-size: 1rem;
-  }
-  
-  .skill-category li i {
-    font-size: 1.5rem;
-  }
-  
-  .skill-icon-img {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
+.sk-pill:hover {
+  background: rgba(99,102,241,.18);
+  border-color: rgba(99,102,241,.5);
+  transform: translateY(-2px);
 }
-
-.skill-category h3 {
-  color: var(--light-text);
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-.skill-category ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.skill-category li {
-  color: var(--medium-text);
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-}
-
-.skill-category li i {
-  font-size: 2rem;
-  color: var(--primary-blue);
-}
-
-.skill-icon-img {
-  width: 2rem;
-  height: 2rem;
-  object-fit: contain;
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.skill-category li:hover .skill-icon-img,
-.skill-category li:hover i {
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 8px var(--primary-blue));
-}
-
-.skill-category li i {
-  transition: transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.skill-category li:hover i {
-  text-shadow: 0 0 8px var(--primary-blue);
-  filter: none; /* filter drop-shadow doesn't work well on text/font icons in some contexts, text-shadow is better for <i> */
-}
+.sk-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--a2); flex-shrink: 0; }
 </style>
