@@ -1,6 +1,85 @@
 /* Satoshi loaded via <link> in index.html (Fontshare CDN) */
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
+/* ─── BLOG POST MARKDOWN STYLES ──────────────────────────── */
+.post-content {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.post-content h1,.post-content h2,.post-content h3,
+.post-content h4,.post-content h5,.post-content h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.2;
+  margin: 2rem 0 .8rem;
+  color: var(--text);
+}
+.post-content h1 { font-size: clamp(1.6rem,3.5vw,2.2rem); }
+.post-content h2 { font-size: clamp(1.3rem,2.8vw,1.75rem); }
+.post-content h3 { font-size: 1.25rem; }
+.post-content p  { margin-bottom: 1.2rem; color: var(--muted); }
+.post-content p strong { color: var(--text); font-weight: 600; }
+.post-content a  { color: var(--a2); text-decoration: underline; text-underline-offset: 3px; }
+.post-content a:hover { color: var(--a1); }
+.post-content ul,.post-content ol { padding-left: 1.5rem; margin-bottom: 1.2rem; }
+.post-content li { color: var(--muted); margin-bottom: .4rem; }
+.post-content blockquote {
+  border-left: 3px solid var(--a2);
+  padding: .8rem 1.2rem;
+  margin: 1.5rem 0;
+  background: var(--bg2);
+  border-radius: 0 var(--r) var(--r) 0;
+  color: var(--muted);
+  font-style: italic;
+}
+.post-content code {
+  font-family: var(--font-mono);
+  font-size: .85em;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: .15rem .4rem;
+  border-radius: 4px;
+  color: var(--a2);
+}
+.post-content pre {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.2rem 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+.post-content pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text);
+  font-size: .9rem;
+}
+.post-content img {
+  max-width: 100%;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+.post-content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+.post-content table {
+  width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .9rem;
+}
+.post-content th,.post-content td {
+  padding: .6rem 1rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.post-content th { background: var(--bg2); font-weight: 600; color: var(--text); }
+.post-content td { color: var(--muted); }
+
 /* ─── STAR TWINKLE (cosmic theme) ─────── */
 @keyframes starTwinkle {
   0%,100% { opacity: .2; transform: scale(1); }
@@ -379,13 +458,16 @@ section { padding: 6rem 0; }
 /* Minimal nav border — same 1px as dark, just different color */
 [data-theme="minimal"] nav { border-bottom-width: 1px !important; }
 
-/* Minimal theme switcher styling */
-[data-theme="minimal"] .theme-switcher {
+/* Minimal unscrolled — white nav, override switcher to dark */
+[data-theme="minimal"] .navbar:not(.scrolled) .theme-switcher {
   border-color: #d0d0d0;
   background: #f0f0f0;
 }
-[data-theme="minimal"] .t-btn { color: #888; }
-[data-theme="minimal"] .t-btn.active { background: #fff; color: #111; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+[data-theme="minimal"] .navbar:not(.scrolled) .t-btn { color: #666; }
+[data-theme="minimal"] .navbar:not(.scrolled) .t-btn:hover { color: #111; }
+[data-theme="minimal"] .navbar:not(.scrolled) .t-btn.active {
+  background: #fff; color: #111; box-shadow: 0 1px 4px rgba(0,0,0,.1);
+}
 
 /* ─── HERO NAME STROKE (brutalist only) ─ */
 [data-theme="brutalist"] .hero-name .stroke {
