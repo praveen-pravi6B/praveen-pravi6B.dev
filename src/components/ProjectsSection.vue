@@ -4,7 +4,27 @@
       <div class="sec-tag">Projects</div>
       <h2 class="sec-h">Things I've <span class="grad-text">shipped</span></h2>
 
-      <div v-if="loading" class="state-msg">Loading projects…</div>
+      <!-- Skeleton grid while loading -->
+      <div v-if="loading" class="bento-grid">
+        <div v-for="(n, i) in 5" :key="n" class="pc" :class="{ wide: i === 0 }">
+          <div class="project-card sk-card">
+            <div class="sk-top">
+              <div class="sk-img-sq"></div>
+              <div class="sk-ext"></div>
+            </div>
+            <div class="sk-title"></div>
+            <div class="sk-desc"></div>
+            <div class="sk-desc sk-desc-short"></div>
+            <div class="sk-desc sk-desc-shorter"></div>
+            <div class="sk-tags">
+              <div class="sk-tag"></div>
+              <div class="sk-tag"></div>
+              <div class="sk-tag sk-tag-sm"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div v-else-if="!projects.length" class="state-msg">No projects found.</div>
 
       <div v-else class="bento-grid">
@@ -128,5 +148,66 @@ onMounted(async () => {
 @media (max-width: 560px) {
   .bento-grid { grid-template-columns: 1fr; }
   .pc.wide { grid-column: span 1; }
+}
+
+/* ── Skeleton ─────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.sk-card {
+  pointer-events: none;
+  gap: 1rem;
+}
+
+.sk-card > * {
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--s1) 25%, var(--bg2, #0f0f1c) 50%, var(--s1) 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+.sk-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  background: transparent !important; animation: none !important;
+}
+.sk-img-sq {
+  width: 48px; height: 48px; border-radius: 10px;
+  background: linear-gradient(90deg, var(--s1) 25%, var(--bg2, #0f0f1c) 50%, var(--s1) 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+.sk-ext {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(90deg, var(--s1) 25%, var(--bg2, #0f0f1c) 50%, var(--s1) 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+.sk-title  { height: 16px; width: 55%; }
+.sk-desc   { height: 11px; width: 100%; }
+.sk-desc-short   { width: 80%; }
+.sk-desc-shorter { width: 60%; }
+.sk-tags { display: flex; gap: .4rem; background: transparent !important; animation: none !important; }
+.sk-tag {
+  height: 20px; width: 56px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--s1) 25%, var(--bg2, #0f0f1c) 50%, var(--s1) 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+.sk-tag-sm { width: 40px; }
+
+/* Light theme adjustments */
+[data-theme="minimal"] .sk-card > *,
+[data-theme="minimal"] .sk-img-sq,
+[data-theme="minimal"] .sk-ext,
+[data-theme="minimal"] .sk-tag,
+[data-theme="brutalist"] .sk-card > *,
+[data-theme="brutalist"] .sk-img-sq,
+[data-theme="brutalist"] .sk-ext,
+[data-theme="brutalist"] .sk-tag {
+  background: linear-gradient(90deg, #e8e8e8 25%, #d4d4d4 50%, #e8e8e8 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s infinite linear;
 }
 </style>

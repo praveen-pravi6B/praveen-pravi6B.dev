@@ -458,13 +458,26 @@ section { padding: 6rem 0; }
 /* Minimal nav border — same 1px as dark, just different color */
 [data-theme="minimal"] nav { border-bottom-width: 1px !important; }
 
-/* Minimal theme switcher styling */
+/* Minimal theme switcher — default (light nav) */
 [data-theme="minimal"] .theme-switcher {
   border-color: #d0d0d0;
   background: #f0f0f0;
 }
 [data-theme="minimal"] .t-btn { color: #888; }
 [data-theme="minimal"] .t-btn.active { background: #fff; color: #111; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+
+/* Minimal scrolled nav — dark glass → switcher needs light colours */
+[data-theme="minimal"] .navbar.scrolled .theme-switcher {
+  border-color: rgba(255,255,255,.15);
+  background: rgba(255,255,255,.08);
+}
+[data-theme="minimal"] .navbar.scrolled .t-btn { color: rgba(255,255,255,.6); }
+[data-theme="minimal"] .navbar.scrolled .t-btn:hover { color: #fff; }
+[data-theme="minimal"] .navbar.scrolled .t-btn.active {
+  background: rgba(255,255,255,.18);
+  color: #fff;
+  box-shadow: none;
+}
 
 /* ─── HERO NAME STROKE (brutalist only) ─ */
 [data-theme="brutalist"] .hero-name .stroke {
