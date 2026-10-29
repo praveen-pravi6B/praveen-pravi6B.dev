@@ -1,5 +1,5 @@
 <template>
-  <div class="theme-switcher">
+  <div class="theme-switcher" :class="{ 'is-drawer': drawer }">
     <button
       v-for="t in themes"
       :key="t"
@@ -16,6 +16,8 @@
 
 <script setup>
 import { useTheme } from '../composables/useTheme.js'
+
+defineProps({ drawer: { type: Boolean, default: false } })
 
 const { current, themes, set } = useTheme()
 
@@ -35,6 +37,7 @@ const dots = {
 </script>
 
 <style scoped>
+/* ── Nav bar version (default) ─────── */
 .theme-switcher {
   display: flex;
   align-items: center;
@@ -61,39 +64,40 @@ const dots = {
   font-family: inherit;
   letter-spacing: .02em;
 }
-
 .t-btn:hover { color: rgba(255,255,255,.9); }
-
-.t-btn.active {
-  background: rgba(255,255,255,.15);
-  color: #fff;
-}
+.t-btn.active { background: rgba(255,255,255,.15); color: #fff; }
 
 .t-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
+  width: 8px; height: 8px;
+  border-radius: 50%; flex-shrink: 0;
 }
 
-/* Desktop: hide names on small screens */
+/* Desktop only — hide names on small screens */
 @media (max-width: 900px) {
   .t-name { display: none; }
   .t-btn { padding: 5px 8px; }
 }
 
-/* Inside mobile drawer: always show names, bigger touch targets */
-.m-theme .theme-switcher {
+/* ── Drawer version ─────────────────── */
+.is-drawer {
+  border-radius: 14px;
+  padding: 5px;
+  gap: 3px;
+  /* Always dark — drawer bg is always dark */
   background: rgba(255,255,255,.08);
-  border-color: rgba(255,255,255,.15);
-  border-radius: 16px;
-  padding: 6px;
-  gap: 4px;
+  border-color: rgba(255,255,255,.14);
 }
-.m-theme .t-btn {
-  padding: 8px 14px;
-  font-size: .82rem;
+.is-drawer .t-btn {
+  padding: 8px 16px;
+  font-size: .85rem;
+  border-radius: 10px;
+  color: rgba(255,255,255,.6);
 }
-.m-theme .t-name { display: inline; }
-.m-theme .t-btn.active { background: rgba(255,255,255,.2); }
+.is-drawer .t-btn:hover { color: #fff; }
+.is-drawer .t-btn.active {
+  background: rgba(255,255,255,.18);
+  color: #fff;
+}
+/* Always show names in drawer regardless of screen size */
+.is-drawer .t-name { display: inline !important; }
 </style>

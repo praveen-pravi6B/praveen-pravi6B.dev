@@ -31,9 +31,7 @@
       <RouterLink to="/blog" class="m-link" @click="menuOpen = false">Blog</RouterLink>
       <a href="/#contact"  class="m-cta"  @click="menuOpen = false">Let's talk</a>
       <!-- Theme switcher inside drawer -->
-      <div class="m-theme">
-        <ThemeSwitcher />
-      </div>
+      <ThemeSwitcher :drawer="true" />
     </div>
   </Teleport>
 </template>
