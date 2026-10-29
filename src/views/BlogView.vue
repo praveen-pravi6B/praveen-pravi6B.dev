@@ -22,7 +22,9 @@
         >{{ tag }}</button>
       </div>
 
-      <div v-if="loading" class="state-msg">Loading…</div>
+      <div v-if="loading" class="posts-grid">
+        <BlogCard v-for="n in 6" :key="n" :skeleton="true" />
+      </div>
       <div v-else-if="!posts.length" class="state-msg">No posts yet.</div>
 
       <div v-else class="posts-grid">

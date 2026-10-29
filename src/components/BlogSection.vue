@@ -9,7 +9,9 @@
         </RouterLink>
       </div>
 
-      <div v-if="loading" class="state-msg">Loading posts…</div>
+      <div v-if="loading" class="blog-grid">
+        <BlogCard v-for="n in 3" :key="n" :skeleton="true" />
+      </div>
 
       <div v-else class="blog-grid">
         <BlogCard v-for="post in posts.slice(0, 3)" :key="post.gist || post.id" :post="post" />

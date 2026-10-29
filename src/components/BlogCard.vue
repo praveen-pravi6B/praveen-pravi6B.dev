@@ -1,5 +1,26 @@
 <template>
-  <article class="blog-card">
+  <!-- Skeleton loader -->
+  <div v-if="skeleton" class="blog-card blog-skeleton">
+    <div class="sk-img"></div>
+    <div class="sk-body">
+      <div class="sk-line sk-date"></div>
+      <div class="sk-tags">
+        <div class="sk-line sk-tag"></div>
+        <div class="sk-line sk-tag"></div>
+      </div>
+      <div class="sk-line sk-title"></div>
+      <div class="sk-line sk-title sk-title-short"></div>
+      <div class="sk-line sk-summary"></div>
+      <div class="sk-line sk-summary"></div>
+      <div class="sk-line sk-summary sk-summary-short"></div>
+      <div class="sk-footer">
+        <div class="sk-line sk-btn"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real card -->
+  <article v-else class="blog-card">
     <!-- Cover image -->
     <div class="bc-img-wrap" v-if="post.image">
       <img :src="post.image" :alt="post.title" class="bc-img"
@@ -28,10 +49,10 @@
           Read more <i class="fa-solid fa-arrow-right"></i>
         </RouterLink>
         <div class="bc-external">
-          <a v-if="post.devto" :href="post.devto" target="_blank" rel="noopener" class="bc-ext-btn bc-devto">
+          <a v-if="post.devto" :href="post.devto" target="_blank" rel="noopener" class="bc-ext-btn">
             <i class="fa-brands fa-dev"></i> Dev.to
           </a>
-          <a v-if="post.medium" :href="post.medium" target="_blank" rel="noopener" class="bc-ext-btn bc-medium">
+          <a v-if="post.medium" :href="post.medium" target="_blank" rel="noopener" class="bc-ext-btn">
             <i class="fa-brands fa-medium"></i> Medium
           </a>
         </div>
@@ -41,10 +62,14 @@
 </template>
 
 <script setup>
-defineProps({ post: Object })
+defineProps({
+  post: { type: Object, default: () => ({}) },
+  skeleton: { type: Boolean, default: false },
+})
 </script>
 
 <style scoped>
+/* ── Real card ──────────────────────── */
 .blog-card {
   background: var(--card-bg);
   border: var(--border-width) var(--border-style) var(--card-border);
@@ -80,10 +105,7 @@ defineProps({ post: Object })
   color: var(--tag-color);
 }
 
-.bc-title {
-  font-size: 1rem; font-weight: 700; line-height: 1.3;
-  color: var(--text);
-}
+.bc-title { font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--text); }
 .bc-summary { font-size: .82rem; color: var(--muted); line-height: 1.6; flex: 1; }
 
 .bc-actions { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; margin-top: auto; padding-top: .4rem; }
@@ -104,5 +126,49 @@ defineProps({ post: Object })
   background: var(--bg2);
   transition: all .2s; color: var(--muted);
 }
-.bc-ext-btn:hover { border-color: var(--a2); color: var(--a2); background: var(--card-bg); }
+.bc-ext-btn:hover { border-color: var(--a2); color: var(--a2); }
+
+/* ── Skeleton ───────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.blog-skeleton { pointer-events: none; }
+
+.sk-img {
+  height: 160px;
+  background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3, #1a1a2a) 50%, var(--bg2) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+.sk-body { padding: 1.2rem; display: flex; flex-direction: column; gap: .7rem; }
+
+.sk-line {
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3, #1a1a2a) 50%, var(--bg2) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+.sk-date  { height: 10px; width: 90px; }
+.sk-tags  { display: flex; gap: .4rem; }
+.sk-tag   { height: 20px; width: 60px; border-radius: 999px; }
+.sk-title { height: 16px; width: 90%; }
+.sk-title-short { width: 60%; }
+.sk-summary { height: 12px; width: 100%; }
+.sk-summary-short { width: 75%; }
+.sk-footer { margin-top: .3rem; }
+.sk-btn { height: 14px; width: 80px; }
+
+/* Adjust shimmer for light themes */
+[data-theme="minimal"] .sk-line,
+[data-theme="minimal"] .sk-img,
+[data-theme="brutalist"] .sk-line,
+[data-theme="brutalist"] .sk-img {
+  background: linear-gradient(90deg, #e8e8e8 25%, #d0d0d0 50%, #e8e8e8 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
 </style>
