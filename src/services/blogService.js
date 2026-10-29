@@ -1,45 +1,49 @@
 /**
  * Blog Service
  *
- * Metadata comes from the Google Sheet (same spreadsheet, 2nd tab — gid=1).
- * Content comes from public GitHub Gists (no API key needed).
+ * Metadata from Google Sheet (blog tab) — published as TSV (tab-separated).
+ * Content from public GitHub Gists — no API key needed.
  *
- * Google Sheet blog tab columns:
- *   title | date | summary | gist | image | tags | devto | medium
+ * Sheet columns: title | date | summary | gist | image | tags | devto | medium
+ *
+ * Using TSV (not CSV) so commas in summaries don't break parsing.
+ * Publish: File → Share → Publish to web → blog tab → Tab-separated values → Publish
  *
  * To add a blog post:
- *   1. Paste your markdown into a NEW public GitHub Gist
- *   2. Copy the Gist ID (long hash in the URL)
- *   3. Add a row in the blog sheet with the metadata + Gist ID
- *   4. (Optional) paste the dev.to / medium URL in the respective columns
+ *   1. Write markdown in any editor
+ *   2. Paste into gist.github.com → Create public gist
+ *   3. Copy the Gist ID from the URL
+ *   4. Add a row in the blog sheet with metadata + Gist ID
+ *   5. (Optional) add dev.to / medium URL in those columns
  */
 
-const BLOG_CSV_URL =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxFWwjf1vyxRQiaLkdsl-OomxIPYHLdCNNNqtsnjj-wswqT0SiiHOT8lW4tNAvqIHxDuNiCpK-LW6U/pub?gid=1&single=true&output=csv'
+// Update after publishing the blog sheet as TSV:
+// File → Share → Publish to web → blog tab → Tab-separated values (.tsv) → Publish
+const BLOG_TSV_URL =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxFWwjf1vyxRQiaLkdsl-OomxIPYHLdCNNNqtsnjj-wswqT0SiiHOT8lW4tNAvqIHxDuNiCpK-LW6U/pub?gid=888445754&single=true&output=tsv'
 
-function parseCsv(text) {
+function parseTsv(text) {
   const lines = text.trim().split('\n')
   if (lines.length < 2) return []
-  const headers = lines[0].split(',').map(h => h.trim())
+  const headers = lines[0].split('\t').map(h => h.trim())
   return lines.slice(1)
     .map((line, i) => {
-      const vals = line.split(',').map(v => v.trim())
+      const vals = line.split('\t').map(v => v.trim())
       const obj = { id: i }
       headers.forEach((h, idx) => { obj[h] = vals[idx] ?? '' })
       // tags: pipe-separated → array
-      if (obj.tags) obj.tags = obj.tags.split('|').map(t => t.trim()).filter(Boolean)
-      else obj.tags = []
+      obj.tags = obj.tags ? obj.tags.split('|').map(t => t.trim()).filter(Boolean) : []
       return obj
     })
     .filter(p => p.title)
 }
 
-/** Fetch all blog post metadata from Google Sheet */
+/** Fetch all blog post metadata from Google Sheet (TSV) */
 export async function fetchPosts() {
   try {
-    const r = await fetch(BLOG_CSV_URL)
+    const r = await fetch(BLOG_TSV_URL)
     if (!r.ok) return []
-    return parseCsv(await r.text())
+    return parseTsv(await r.text())
   } catch {
     return []
   }
@@ -48,7 +52,6 @@ export async function fetchPosts() {
 /** Fetch raw markdown content from a public GitHub Gist */
 export async function fetchGistContent(gistId) {
   if (!gistId) throw new Error('No gist ID provided')
-  // First get the gist metadata to find the raw URL for the first file
   const meta = await fetch(`https://api.github.com/gists/${gistId}`)
   if (!meta.ok) throw new Error(`Gist not found: ${gistId}`)
   const data = await meta.json()
