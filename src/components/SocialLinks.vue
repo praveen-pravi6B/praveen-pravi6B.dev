@@ -18,13 +18,13 @@ const trackClick = (socialName) => {
 };
 
 const socials = ref([
-  { name: 'GitHub', url: 'https://github.com/praveen-pravi6B', icon: 'fab fa-github' },
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/praveen-kumar-44a7811a9/', icon: 'fab fa-linkedin' },
-  { name: 'Mobile', url: 'tel:+918925347231', icon: 'fas fa-mobile-alt' },
-  { name: 'Instagram', url: 'https://www.instagram.com/i_am._praveen._.kumar/', icon: 'fab fa-instagram' },
-  { name: 'Twitter (X)', url: 'https://x.com/PraveenKum6066', icon: 'fab fa-x-twitter' },
-  { name: 'Discord', url: 'https://discordapp.com/users/praveenkumarm2240', icon: 'fab fa-discord' },
-  { name: 'Telegram', url: 'https://t.me/Praveenkumar006', icon: 'fab fa-telegram' },
+  { name: 'GitHub', url: 'https://github.com/praveen-pravi6B', icon: 'fa-brands fa-github' },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/praveen-kumar-44a7811a9/', icon: 'fa-brands fa-linkedin' },
+  { name: 'Mobile', url: 'tel:+918925347231', icon: 'fa-solid fa-mobile-screen-button' },
+  { name: 'Instagram', url: 'https://www.instagram.com/i_am._praveen._.kumar/', icon: 'fa-brands fa-instagram' },
+  { name: 'Twitter (X)', url: 'https://x.com/PraveenKum6066', icon: 'fa-brands fa-x-twitter' },
+  { name: 'Discord', url: 'https://discordapp.com/users/praveenkumarm2240', icon: 'fa-brands fa-discord' },
+  { name: 'Telegram', url: 'https://t.me/Praveenkumar006', icon: 'fa-brands fa-telegram' },
 ]);
 </script>
 

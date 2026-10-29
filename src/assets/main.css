@@ -1,58 +1,581 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+/* Satoshi loaded via <link> in index.html (Fontshare CDN) */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
-:root {
-  --primary-blue: #1976D2;
-  --dark-bg: #0A0A10;
-  --light-text: #f0f0f0;
-  --medium-text: #a0a0a0;
+/* ─── STAR TWINKLE (cosmic theme) ─────── */
+@keyframes starTwinkle {
+  0%,100% { opacity: .2; transform: scale(1); }
+  50%      { opacity: 1;  transform: scale(1.6); }
 }
 
-html {
-  font-size: 16px;
-  box-sizing: border-box;
+/* ═══════════════════════════════════════
+   THEME: dark (default — blue/indigo)
+═══════════════════════════════════════ */
+:root, [data-theme="dark"] {
+  --bg:          #050508;
+  --bg2:         #0a0a12;
+  --bg3:         #0f0f1c;
+  --text:        #e8e8f0;
+  --muted:       #5a5a80;
+  --border:      rgba(99,102,241,.16);
+  --a1:          #3b82f6;
+  --a2:          #6366f1;
+  --a3:          #8b5cf6;
+  --grad:        linear-gradient(135deg,#3b82f6,#6366f1,#8b5cf6);
+  --tag-bg:      rgba(59,130,246,.1);
+  --tag-border:  rgba(99,102,241,.22);
+  --tag-color:   #6366f1;
+  --card-bg:     rgba(255,255,255,.04);
+  --card-hover:  rgba(255,255,255,.07);
+  --card-border: rgba(99,102,241,.16);
+  --card-hover-border: rgba(99,102,241,.4);
+  --card-shadow: 0 12px 40px rgba(59,130,246,.12);
+  --nav-bg:      rgba(5,5,8,.6);
+  --bento-bg:    rgba(10,10,18,.8);
+  --r:           16px;
+  --font-body:    'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --body-dot:    radial-gradient(circle, rgba(99,102,241,.1) 1px, transparent 1px);
+  --body-dot-size: 28px 28px;
+  --border-width: 1px;
+  --border-style: solid;
+  --switcher-bg:   rgba(255,255,255,.06);
+  --switcher-active: rgba(255,255,255,.12);
+  --sec-tag-color: var(--a2);
+  color-scheme: dark;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
+/* ═══════════════════════════════════════
+   THEME: cosmic (neon aurora)
+═══════════════════════════════════════ */
+[data-theme="cosmic"] {
+  --bg:          #03030a;
+  --bg2:         rgba(255,255,255,.04);
+  --bg3:         rgba(255,255,255,.07);
+  --text:        #f0f0ff;
+  --muted:       #5a5a90;
+  --border:      rgba(255,255,255,.08);
+  --a1:          #00f5ff;
+  --a2:          #bf5af2;
+  --a3:          #30d158;
+  --grad:        linear-gradient(135deg,#00f5ff,#bf5af2,#ff375f);
+  --tag-bg:      rgba(191,90,242,.1);
+  --tag-border:  rgba(191,90,242,.22);
+  --tag-color:   #bf5af2;
+  --card-bg:     rgba(255,255,255,.04);
+  --card-hover:  rgba(255,255,255,.07);
+  --card-border: rgba(255,255,255,.08);
+  --card-hover-border: rgba(0,245,255,.3);
+  --card-shadow: 0 12px 40px rgba(0,245,255,.08);
+  --nav-bg:      rgba(3,3,10,.7);
+  --bento-bg:    rgba(255,255,255,.04);
+  --r:           16px;
+  --font-body:    'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --body-dot:    none;
+  --body-dot-size: 0;
+  --border-width: 1px;
+  --border-style: solid;
+  --switcher-bg:   rgba(255,255,255,.06);
+  --switcher-active: rgba(255,255,255,.12);
+  --sec-tag-color: var(--a2);
+  color-scheme: dark;
 }
 
-@media (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
+/* ═══════════════════════════════════════
+   THEME: brutalist (off-white, bold)
+═══════════════════════════════════════ */
+[data-theme="brutalist"] {
+  --bg:          #f5f0e8;
+  --bg2:         #fff;
+  --bg3:         #eee8da;
+  --text:        #0d0d0d;
+  --muted:       #666;
+  --border:      #0d0d0d;
+  --a1:          #ff3f3f;
+  --a2:          #3f3fff;
+  --a3:          #3fff8a;
+  --grad:        linear-gradient(135deg,#ff3f3f,#3f3fff);
+  --tag-bg:      #f5f0e8;
+  --tag-border:  #0d0d0d;
+  --tag-color:   #0d0d0d;
+  --card-bg:     #fff;
+  --card-hover:  #fff8f0;
+  --card-border: #0d0d0d;
+  --card-hover-border: #0d0d0d;
+  --card-shadow: 5px 5px 0 #0d0d0d;
+  --nav-bg:      #0d0d0d;
+  --bento-bg:    #fff;
+  --r:           0px;
+  --font-body:    'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --body-dot:    none;
+  --body-dot-size: 0;
+  --border-width: 2.5px;
+  --border-style: solid;
+  --switcher-bg:   rgba(0,0,0,.08);
+  --switcher-active: rgba(0,0,0,.15);
+  --sec-tag-color: var(--a2);
+  color-scheme: light;
 }
 
-@media (max-width: 375px) {
-  html {
-    font-size: 12px;
-  }
+/* ═══════════════════════════════════════
+   THEME: minimal (white, professional)
+═══════════════════════════════════════ */
+[data-theme="minimal"] {
+  --bg:          #fafafa;
+  --bg2:         #f4f4f0;
+  --bg3:         #fff;
+  --text:        #0a0a0a;
+  --muted:       #888;
+  --border:      #e8e8e8;
+  --a1:          #0066ff;
+  --a2:          #6600ff;
+  --a3:          #00a86b;
+  --grad:        linear-gradient(135deg,#0066ff,#6600ff);
+  --tag-bg:      rgba(0,102,255,.07);
+  --tag-border:  rgba(0,102,255,.18);
+  --tag-color:   #0066ff;
+  --card-bg:     #fff;
+  --card-hover:  #fff;
+  --card-border: #e8e8e8;
+  --card-hover-border: rgba(0,102,255,.3);
+  --card-shadow: 0 8px 30px rgba(0,102,255,.08);
+  --nav-bg:      rgba(250,250,250,.92);
+  --bento-bg:    #fff;
+  /* Layout tokens IDENTICAL to dark — only colors differ */
+  --r:           16px;
+  --font-body:    'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --body-dot:    none;
+  --body-dot-size: 0;
+  --border-width: 1px;
+  --border-style: solid;
+  --switcher-bg:   rgba(0,0,0,.05);
+  --switcher-active: rgba(0,0,0,.1);
+  --sec-tag-color: var(--a1);
+  color-scheme: light;
 }
+
+/* ─── RESET ──────────────────────────── */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; font-weight: normal; }
+html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  background: var(--dark-bg);
-  color: var(--light-text);
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  width: 100vw;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  background-image: var(--body-dot);
+  background-size: var(--body-dot-size);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .3s ease, color .3s ease;
+  will-change: background-color, color;
 }
 
-#app {
+/* ─── FONT AWESOME FIX ───────────────────────────────────── */
+/* FA7 uses :where() (zero specificity) — our *::before reset overrides it.
+   Must explicitly restore font-weight and display for solid/brands icons.  */
+.fa-solid::before  { font-weight: 900 !important; }
+.fa-regular::before { font-weight: 400 !important; }
+.fa-brands::before  { font-weight: 400 !important; }
+.fa-solid, .fa-regular, .fa-brands {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── UNIFIED TYPE SCALE — Satoshi 700 across ALL themes ─── */
+/* Single weight = no layout shift on theme toggle */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+}
+.sec-h { font-weight: 700 !important; }
+.hero-name { font-weight: 700 !important; }
+/* Mono only for tags/code */
+code, .font-mono, .pc-tag, .ptag { font-family: var(--font-mono); }
+
+#app { display: flex; flex-direction: column; min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ─── SCROLLBAR ──────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--a2); border-radius: 2px; }
+* { scrollbar-width: thin; scrollbar-color: var(--a2) transparent; }
+
+/* ─── UTILITIES ──────────────────────── */
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+
+.sec-tag {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .7rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--sec-tag-color);
+  margin-bottom: .8rem;
+}
+.sec-tag::before { content: ''; width: 20px; height: 1px; background: var(--sec-tag-color); }
+
+/* Brutalist overrides sec-tag */
+[data-theme="brutalist"] .sec-tag {
+  background: var(--a2); color: #fff; padding: .2rem .6rem;
+  border-radius: 0; border: none;
+}
+[data-theme="brutalist"] .sec-tag::before { display: none; }
+
+.sec-h {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900; line-height: 1.05;
+  letter-spacing: -.03em; margin-bottom: 2.5rem;
+}
+
+[data-theme="brutalist"] .sec-h { letter-spacing: -.04em; }
+/* Removed: was causing layout shift vs dark — now using unified scale */
+
+section { padding: 6rem 0; }
+
+/* ─── CARDS ──────────────────────────── */
+.card {
+  background: var(--card-bg);
+  border: var(--border-width) var(--border-style) var(--card-border);
+  border-radius: var(--r);
+  transition: border-color .25s, transform .25s, box-shadow .25s, background .25s;
+}
+.card:hover {
+  background: var(--card-hover);
+  border-color: var(--card-hover-border);
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow);
+}
+
+[data-theme="brutalist"] .card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: var(--card-shadow);
+}
+
+/* ─── BUTTONS ────────────────────────── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--grad); color: #fff;
+  padding: .72rem 1.8rem; border-radius: calc(var(--r) * 10);
+  font-weight: 700; font-size: .9rem; border: none; cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+  font-family: var(--font-body);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(99,102,241,.35);
+}
+
+[data-theme="brutalist"] .btn-primary {
+  border-radius: 0;
+  border: 2.5px solid #fff;
+  background: var(--a1);
+}
+[data-theme="brutalist"] .btn-primary:hover {
+  transform: translate(-3px,-3px);
+  box-shadow: 5px 5px 0 #fff;
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: transparent; color: var(--text);
+  padding: .72rem 1.8rem; border-radius: calc(var(--r) * 10);
+  font-weight: 700; font-size: .9rem; cursor: pointer;
+  border: var(--border-width) var(--border-style) var(--border);
+  transition: border-color .2s, background .2s;
+  font-family: var(--font-body);
+}
+.btn-secondary:hover {
+  border-color: var(--a1);
+  background: rgba(99,102,241,.07);
+}
+
+[data-theme="brutalist"] .btn-secondary {
+  border-radius: 0;
+  border-width: 2.5px;
+  border-color: var(--text);
+}
+[data-theme="brutalist"] .btn-secondary:hover {
+  transform: translate(-3px,-3px);
+  box-shadow: 5px 5px 0 var(--text);
+  background: transparent;
+}
+
+/* ─── SKILL PILLS ────────────────────── */
+.sk-pill {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .45rem 1.1rem; border-radius: calc(var(--r) * 10);
+  font-size: .82rem; font-weight: 500; cursor: default;
+  border: var(--border-width) var(--border-style) rgba(99,102,241,.25);
+  background: rgba(99,102,241,.07);
+  color: var(--text);
+  transition: all .2s;
+  font-family: var(--font-body);
+  white-space: nowrap;
+}
+.sk-pill:hover {
+  background: rgba(99,102,241,.18);
+  border-color: var(--a2);
+  transform: translateY(-2px);
+}
+
+[data-theme="cosmic"] .sk-pill { border-color: rgba(0,245,255,.25); background: rgba(0,245,255,.05); }
+[data-theme="cosmic"] .sk-pill:hover { background: rgba(0,245,255,.12); border-color: var(--a1); }
+
+[data-theme="brutalist"] .sk-pill {
+  border-radius: 0; border-width: 2px; border-color: var(--a1);
+  color: var(--a1); background: transparent;
+  font-family: var(--font-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .04em;
+}
+[data-theme="brutalist"] .sk-pill:hover { background: var(--a1); color: #fff; transform: none; box-shadow: 3px 3px 0 rgba(0,0,0,.2); }
+
+[data-theme="minimal"] .sk-pill { border-color: var(--border); background: var(--bg3); color: var(--text); }
+[data-theme="minimal"] .sk-pill:hover { border-color: var(--a1); color: var(--a1); background: rgba(0,102,255,.04); }
+
+.sk-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--a2); flex-shrink: 0; }
+[data-theme="cosmic"] .sk-dot { background: var(--a1); }
+[data-theme="brutalist"] .sk-dot { display: none; }
+[data-theme="minimal"] .sk-dot { background: var(--a1); }
+
+/* ─── PROJECT TAGS ───────────────────── */
+.pc-tag {
+  font-size: .68rem; font-weight: 500;
+  padding: .18rem .55rem; border-radius: calc(var(--r) * 5);
+  background: var(--tag-bg); border: 1px solid var(--tag-border);
+  color: var(--tag-color); font-family: var(--font-mono);
+}
+
+[data-theme="brutalist"] .pc-tag {
+  border-radius: 0; border-width: 1.5px; border-color: var(--ink, #0d0d0d);
+  background: var(--bg); color: var(--text);
+  text-transform: uppercase; letter-spacing: .04em;
+}
+
+/* ─── NAV ────────────────────────────── */
+[data-theme="brutalist"] nav { background: var(--text) !important; border-color: var(--text); }
+[data-theme="brutalist"] .nav-logo span { -webkit-text-fill-color: #fff !important; background: none; color: #fff; }
+[data-theme="minimal"] .nav-logo span { -webkit-text-fill-color: unset; background: none; color: var(--a1); }
+[data-theme="brutalist"] .nav-link { color: rgba(255,255,255,.7) !important; }
+[data-theme="brutalist"] .nav-link:hover { color: #fff !important; }
+[data-theme="brutalist"] .nav-cta { background: var(--a1) !important; border-radius: 0; border: 2px solid #fff; }
+/* Minimal nav border — same 1px as dark, just different color */
+[data-theme="minimal"] nav { border-bottom-width: 1px !important; }
+
+/* Minimal theme switcher styling */
+[data-theme="minimal"] .theme-switcher {
+  border-color: #d0d0d0;
+  background: #f0f0f0;
+}
+[data-theme="minimal"] .t-btn { color: #888; }
+[data-theme="minimal"] .t-btn.active { background: #fff; color: #111; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+
+/* ─── HERO NAME STROKE (brutalist only) ─ */
+[data-theme="brutalist"] .hero-name .stroke {
+  -webkit-text-stroke: 3px var(--text);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+[data-theme="brutalist"] .hero-name .fill { color: var(--text); -webkit-text-fill-color: var(--text); }
+
+/* ── HERO LAYOUT PER THEME ────────────────────────────────── */
+
+/* Dark + Minimal: 2-col with profile card */
+[data-theme="dark"] #hero,
+[data-theme="minimal"] #hero { grid-template-columns: 1fr 320px; }
+
+[data-theme="minimal"] .hero-profile-card { display: flex; }
+[data-theme="dark"] .hero-profile-card {
+  display: flex; background: var(--s1); border-color: var(--border);
+}
+[data-theme="dark"] .hpc-avatar-img { background: rgba(255,255,255,.06); border: none; filter: none; }
+[data-theme="dark"] .hpc-name { color: var(--text); }
+[data-theme="dark"] .hpc-s { background: var(--s2); }
+[data-theme="dark"] .hpc-n { color: var(--a1); }
+
+/* ── COSMIC hero: centered single-col, no profile card ─────── */
+[data-theme="cosmic"] #home {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 6rem 2rem 3rem !important;
+  min-height: 100vh;
+}
+[data-theme="cosmic"] .hero-left {
+  max-width: 900px !important;
+  padding: 0 !important;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+[data-theme="cosmic"] .hero-profile-card { display: none !important; }
+[data-theme="cosmic"] .hero-btns { justify-content: center; }
+[data-theme="cosmic"] .hero-socials { justify-content: center; }
+[data-theme="cosmic"] .hero-sub { text-align: center; margin-left: auto; margin-right: auto; }
+/* Only one strip visible per theme */
+[data-theme="dark"]    .hero-stats-strip,
+[data-theme="dark"]    .hero-stats-bar,
+[data-theme="minimal"] .hero-stats-strip,
+[data-theme="minimal"] .hero-stats-bar    { display: none !important; }
+[data-theme="cosmic"]  .hero-stats-strip  { display: flex !important; }
+[data-theme="cosmic"]  .hero-stats-bar    { display: none !important; }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-*::-webkit-scrollbar {
-  display: none;
+/* Cosmic button glow */
+[data-theme="cosmic"] .btn-solid {
+  box-shadow: 0 0 0 rgba(0,245,255,0);
+  transition: transform .2s, box-shadow .2s;
+}
+[data-theme="cosmic"] .btn-solid:hover {
+  box-shadow: 0 0 40px rgba(0,245,255,.35), 0 0 80px rgba(191,90,242,.2);
+}
+[data-theme="cosmic"] .btn-outline {
+  border-color: rgba(0,245,255,.3);
+  transition: border-color .2s, background .2s;
+}
+[data-theme="cosmic"] .btn-outline:hover {
+  border-color: rgba(0,245,255,.6); background: rgba(0,245,255,.06);
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-* {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
+/* Cosmic nav CTA: cyan ghost pill */
+[data-theme="cosmic"] .nav-cta {
+  background: rgba(0,245,255,.06) !important;
+  border: 1px solid rgba(0,245,255,.4) !important;
+  color: #00f5ff !important;
+  border-radius: 999px !important;
 }
+[data-theme="cosmic"] .nav-cta:hover {
+  background: rgba(0,245,255,.14) !important;
+  box-shadow: 0 0 20px rgba(0,245,255,.2) !important;
+}
+
+/* ── BRUTALIST hero: full-col, huge stroke text ────────────── */
+[data-theme="brutalist"] #home {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  padding: 6rem 2rem 4rem !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+[data-theme="brutalist"] .hero-left { max-width: 100% !important; padding: 0 !important; }
+[data-theme="brutalist"] .hero-profile-card { display: none !important; }
+
+/* Show brutalist-specific elements */
+[data-theme="brutalist"] .hero-brut-tag { display: inline-flex; }
+[data-theme="brutalist"] .hero-name-default { display: none; }
+[data-theme="brutalist"] .hero-name-brut { display: block; }
+[data-theme="brutalist"] .hero-stats-bar   { display: flex !important; }
+[data-theme="brutalist"] .hero-stats-strip { display: none !important; }
+
+/* Brutalist hero name: massive */
+[data-theme="brutalist"] .hero-name-brut {
+  font-size: clamp(4rem, 11vw, 9rem);
+  font-weight: 700; line-height: .9; letter-spacing: -.05em;
+  margin-bottom: 1.5rem;
+}
+[data-theme="brutalist"] .hero-name-brut .fill { color: var(--text); -webkit-text-fill-color: var(--text); }
+[data-theme="brutalist"] .hero-name-brut .stroke {
+  -webkit-text-stroke: 3px var(--text);
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+
+/* Brutalist tag */
+[data-theme="brutalist"] .hero-brut-tag {
+  font-family: var(--font-mono);
+  font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  background: #3fff8a; color: #0d0d0d;
+  border: 2px solid #0d0d0d; padding: .3rem .8rem;
+  margin-bottom: 1.5rem; width: fit-content;
+}
+
+/* Brutalist hero sub: left border */
+[data-theme="brutalist"] .hero-sub {
+  border-left: 4px solid var(--a1); padding-left: 1rem;
+  font-size: 1.1rem; max-width: 480px; color: #555;
+}
+
+/* Brutalist buttons: flat uppercase bordered */
+[data-theme="brutalist"] .btn-solid {
+  background: #0d0d0d !important; color: #f5f0e8 !important;
+  border-radius: 0 !important; text-transform: uppercase;
+  letter-spacing: .05em; border: 2.5px solid #0d0d0d !important;
+  font-size: .85rem;
+}
+[data-theme="brutalist"] .btn-solid:hover {
+  transform: translate(-3px,-3px) !important;
+  box-shadow: 5px 5px 0 #3fff8a !important;
+}
+[data-theme="brutalist"] .btn-outline {
+  border-radius: 0 !important; text-transform: uppercase;
+  letter-spacing: .05em; border-color: #0d0d0d !important;
+  font-size: .85rem; color: #0d0d0d !important;
+}
+[data-theme="brutalist"] .btn-outline:hover {
+  transform: translate(-3px,-3px) !important;
+  box-shadow: 5px 5px 0 #0d0d0d !important;
+  background: transparent !important;
+}
+
+/* Brutalist social icons */
+[data-theme="brutalist"] .hero-socials a {
+  width: 42px; height: 42px; border: 2.5px solid #0d0d0d;
+  border-radius: 0; background: #f5f0e8;
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+[data-theme="brutalist"] .hero-socials a:hover {
+  background: #0d0d0d; color: #f5f0e8;
+  transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--a1);
+}
+
+/* ─── BENTO BORDERS ──────────────────── */
+[data-theme="brutalist"] .b-mini {
+  border-radius: 0;
+  border-width: 2.5px;
+  border-color: var(--text);
+}
+[data-theme="brutalist"] .b-hf { border: 2.5px solid var(--a1); background: var(--a1); }
+
+/* ─── CONTACT ────────────────────────── */
+[data-theme="minimal"] #contact { background: #fff; border-top: 1px solid var(--border); }
+[data-theme="brutalist"] #contact { background: var(--bg2); border-top: 3px solid var(--text); }
+
+/* ─── FOOTER ─────────────────────────── */
+[data-theme="brutalist"] .site-footer { background: var(--text); color: #777; border-top-color: var(--text); }
+[data-theme="minimal"] .site-footer { background: var(--bg2); border-top-color: var(--border); }
+
+/* ─── ABOUT SECTION ──────────────────── */
+[data-theme="brutalist"] .a-block { border-radius: 0; border-width: 2.5px; }
+[data-theme="brutalist"] .a-block:hover { transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--text); }
+
+/* ─── BLOG CARDS ─────────────────────── */
+[data-theme="brutalist"] .bc { border-radius: 0; border-width: 2.5px; }
+[data-theme="brutalist"] .bc:hover { transform: translate(-4px,-4px); box-shadow: var(--card-shadow); }
+
+/* ─── RESPONSIVE ─────────────────────── */
+@media (max-width: 768px) {
+  html { font-size: 15px; }
+  section { padding: 4rem 0; }
+  [data-theme="minimal"] #hero { grid-template-columns: 1fr; }
+  [data-theme="minimal"] .hero-profile-card { display: none; }
+}
+@media (max-width: 400px) { html { font-size: 14px; } }
