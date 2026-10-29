@@ -56,17 +56,18 @@ const dots = {
   cursor: pointer;
   font-size: .72rem;
   font-weight: 600;
-  color: var(--muted);
+  /* Always light — switcher lives on dark navbars by default */
+  color: rgba(255,255,255,.55);
   transition: all .2s;
   font-family: inherit;
   letter-spacing: .02em;
 }
 
-.t-btn:hover { color: var(--text); }
+.t-btn:hover { color: rgba(255,255,255,.9); }
 
 .t-btn.active {
   background: var(--switcher-active, rgba(255,255,255,.12));
-  color: var(--text);
+  color: #fff;
 }
 
 .t-dot {
