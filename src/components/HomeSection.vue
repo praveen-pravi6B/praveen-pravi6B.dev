@@ -54,6 +54,11 @@
       </div>
     </div>
 
+    <!-- Terminal widget — shown on Dark / Minimal / Cosmic; hidden on Brutalist -->
+    <div class="hero-terminal-wrap">
+      <HeroTerminal :promptChar="termPrompt" />
+    </div>
+
     <!-- Dark bento (unused — kept for mobile fallback) -->
     <div class="hero-right hero-right-bento"></div>
 
@@ -78,6 +83,11 @@
 
 <script setup>
 import { computed } from 'vue'
+import HeroTerminal from './HeroTerminal.vue'
+import { useTheme } from '../composables/useTheme.js'
+
+const { current } = useTheme()
+const termPrompt = computed(() => current.value === 'cosmic' ? '✦' : '~')
 
 const startDate = new Date('2022-11-10')
 const yearsExp = computed(() => {
@@ -106,11 +116,15 @@ const track = (name) => {
 .hero {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 420px;
   align-items: center;
-  padding-top: 60px;
+  padding: 80px clamp(2rem, 5vw, 5rem) 3rem;
+  gap: 3rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
 }
-.hero-left { padding: 3rem 2rem; max-width: 740px; }
+.hero-left { max-width: 600px; }
 
 .hero-name {
   font-size: clamp(3rem, 7vw, 5.5rem);
@@ -128,11 +142,12 @@ const track = (name) => {
 .hero-socials a:hover { color: var(--a2); transform: translateY(-2px); }
 
 /* Hidden by default — shown per theme */
-.hero-brut-tag   { display: none; }
-.hero-name-brut  { display: none; }
-.hero-stats-strip { display: none; }
-.hero-stats-bar  { display: none; }
-.hero-right-bento { display: none; }
+.hero-brut-tag     { display: none; }
+.hero-name-brut    { display: none; }
+.hero-stats-strip  { display: none; }
+.hero-stats-bar    { display: none; }
+.hero-right-bento  { display: none; }
+.hero-terminal-wrap { display: none; align-self: center; }
 
 /* Profile card base */
 .hero-profile-card {
@@ -181,8 +196,9 @@ const track = (name) => {
 
 /* Mobile */
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; padding: 2rem 0 0; }
-  .hero-left { padding: 2rem 1.5rem 1.5rem; max-width: 100%; }
+  .hero { grid-template-columns: 1fr; padding: 5rem 1.5rem 2rem; gap: 0; margin: 0; max-width: 100%; }
+  .hero-left { max-width: 100%; }
+  .hero-terminal-wrap { display: none !important; }
   .hss-item, .hsb-item { padding: 1.2rem 1rem; }
   .hss-num { font-size: 1.6rem; }
   .hsb-num { font-size: 1.8rem; }

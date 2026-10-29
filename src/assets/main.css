@@ -483,14 +483,39 @@ section { padding: 6rem 0; }
 [data-theme="dark"] #hero,
 [data-theme="minimal"] #hero { grid-template-columns: 1fr 320px; }
 
-[data-theme="minimal"] .hero-profile-card { display: flex; }
-[data-theme="dark"] .hero-profile-card {
-  display: flex; background: var(--s1); border-color: var(--border);
+/* Profile card — hidden (terminal replaces it on all themes) */
+[data-theme="minimal"] .hero-profile-card,
+[data-theme="dark"]    .hero-profile-card { display: none !important; }
+
+/* ── TERMINAL — Dark ──────────────────────────────────────── */
+[data-theme="dark"] .hero-terminal-wrap { display: block; }
+[data-theme="dark"] {
+  --term-bg:           #0d0d1a;
+  --term-bar-bg:       #1a1a2e;
+  --term-border:       rgba(124,58,237,.3);
+  --term-shadow:       0 0 40px rgba(124,58,237,.12), 0 20px 60px rgba(0,0,0,.4);
+  --term-title-color:  #555;
+  --term-text:         #c9d1d9;
+  --term-prompt:       #a78bfa;
+  --term-cmd:          #e2e8f0;
+  --term-out:          #7dd3a8;
+  --term-cursor:       #a78bfa;
 }
-[data-theme="dark"] .hpc-avatar-img { background: rgba(255,255,255,.06); border: none; filter: none; }
-[data-theme="dark"] .hpc-name { color: var(--text); }
-[data-theme="dark"] .hpc-s { background: var(--s2); }
-[data-theme="dark"] .hpc-n { color: var(--a1); }
+
+/* ── TERMINAL — Minimal ───────────────────────────────────── */
+[data-theme="minimal"] .hero-terminal-wrap { display: block; }
+[data-theme="minimal"] {
+  --term-bg:           #fafafa;
+  --term-bar-bg:       #f0f0f0;
+  --term-border:       #e0e0e0;
+  --term-shadow:       0 4px 24px rgba(0,0,0,.07);
+  --term-title-color:  #aaa;
+  --term-text:         #333;
+  --term-prompt:       #6366f1;
+  --term-cmd:          #1a1a1a;
+  --term-out:          #16a34a;
+  --term-cursor:       #6366f1;
+}
 
 /* ── COSMIC hero: centered single-col, no profile card ─────── */
 [data-theme="cosmic"] #home {
@@ -513,6 +538,25 @@ section { padding: 6rem 0; }
 [data-theme="cosmic"] .hero-btns { justify-content: center; }
 [data-theme="cosmic"] .hero-socials { justify-content: center; }
 [data-theme="cosmic"] .hero-sub { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* ── TERMINAL — Cosmic (below centered content) ───────────── */
+[data-theme="cosmic"] .hero-terminal-wrap {
+  display: block;
+  width: 100%; max-width: 600px;
+  margin-top: 3rem;
+}
+[data-theme="cosmic"] {
+  --term-bg:           rgba(10,10,25,.9);
+  --term-bar-bg:       rgba(20,10,40,.9);
+  --term-border:       rgba(167,139,250,.35);
+  --term-shadow:       0 0 60px rgba(139,92,246,.2), 0 20px 60px rgba(0,0,0,.5);
+  --term-title-color:  #443366;
+  --term-text:         #c4b5fd;
+  --term-prompt:       #f472b6;
+  --term-cmd:          #e9d5ff;
+  --term-out:          #86efac;
+  --term-cursor:       #f472b6;
+}
 /* Only one strip visible per theme */
 [data-theme="dark"]    .hero-stats-strip,
 [data-theme="dark"]    .hero-stats-bar,
@@ -561,6 +605,24 @@ section { padding: 6rem 0; }
 }
 [data-theme="brutalist"] .hero-left { max-width: 100% !important; padding: 0 !important; }
 [data-theme="brutalist"] .hero-profile-card { display: none !important; }
+
+/* ── TERMINAL — Brutalist (below hero text, full-width black strip) ── */
+[data-theme="brutalist"] .hero-terminal-wrap {
+  display: block;
+  width: 100%; max-width: 680px;
+  margin-top: 2.5rem;
+  --term-radius: 0;
+  --term-bg:           #0d0d0d;
+  --term-bar-bg:       #111;
+  --term-border:       #222;
+  --term-shadow:       none;
+  --term-title-color:  #444;
+  --term-text:         #3fff8a;
+  --term-prompt:       #ff6b35;
+  --term-cmd:          #fff;
+  --term-out:          #3fff8a;
+  --term-cursor:       #3fff8a;
+}
 
 /* Show brutalist-specific elements */
 [data-theme="brutalist"] .hero-brut-tag { display: inline-flex; }
@@ -659,5 +721,7 @@ section { padding: 6rem 0; }
   section { padding: 4rem 0; }
   [data-theme="minimal"] #hero { grid-template-columns: 1fr; }
   [data-theme="minimal"] .hero-profile-card { display: none; }
+  [data-theme="dark"]    .hero-terminal-wrap { display: none; }
+  [data-theme="minimal"] .hero-terminal-wrap { display: none; }
 }
 @media (max-width: 400px) { html { font-size: 14px; } }
