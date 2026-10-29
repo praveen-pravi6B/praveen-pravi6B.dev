@@ -10,17 +10,16 @@
       </div>
 
       <!-- Skeleton -->
-      <div v-if="loading" class="post-list">
-        <BlogCard v-for="n in 3" :key="n" :skeleton="true" :list="true" />
+      <div v-if="loading" class="post-grid">
+        <BlogCard v-for="n in 3" :key="n" :skeleton="true" />
       </div>
 
       <!-- Posts -->
-      <div v-else class="post-list">
+      <div v-else class="post-grid">
         <BlogCard
           v-for="post in posts.slice(0, 3)"
           :key="post.gist || post.id"
           :post="post"
-          :list="true"
         />
       </div>
     </div>
@@ -52,5 +51,11 @@ onMounted(async () => {
 }
 .view-all:hover { gap: .7rem; }
 
-.post-list { display: flex; flex-direction: column; gap: 1rem; }
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 900px) { .post-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .post-grid { grid-template-columns: 1fr; } }
 </style>
