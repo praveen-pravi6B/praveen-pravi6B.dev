@@ -51,6 +51,9 @@
         <!-- Rendered markdown -->
         <div class="post-content" v-html="renderedContent"></div>
 
+        <!-- Comments & Reactions -->
+        <GiscusComments />
+
       </article>
     </div>
   </div>
@@ -61,6 +64,7 @@ import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { marked } from 'marked'
 import { fetchPosts, fetchGistContent } from '../services/blogService.js'
+import GiscusComments from '../components/GiscusComments.vue'
 
 const route = useRoute()
 const loading = ref(true)
