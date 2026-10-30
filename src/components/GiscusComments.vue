@@ -16,9 +16,9 @@ import { useTheme } from '../composables/useTheme.js'
  *     and copy REPO_ID + CATEGORY_ID into the constants below.
  */
 const REPO        = 'praveen-pravi6B/praveen-pravi6B.dev'
-const REPO_ID     = 'REPLACE_REPO_ID'       // from giscus.app
-const CATEGORY    = 'Blog Comments'          // create this category in Discussions
-const CATEGORY_ID = 'REPLACE_CATEGORY_ID'   // from giscus.app
+const REPO_ID     = 'R_kgDOQp20ig'
+const CATEGORY    = 'Blog Comments'
+const CATEGORY_ID = 'DIC_kwDOQp20is4DJ_bR'
 
 const themeMap = {
   dark:      'dark',
