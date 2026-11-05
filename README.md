@@ -132,6 +132,80 @@ Toggle in the navbar. Selection persists to `localStorage`.
 
 ---
 
+## ☁️ Versioned deployment (v1 / v2 / v3)
+
+Three complete versions render on the **same domain and the same URL**. A `site_version` cookie decides which one is rendered at `/`:
+
+| Cookie | Version | Source |
+| --- | --- | --- |
+| `site_version=v1` | Original glass portfolio | `archive/v1/` (prebuilt) |
+| `site_version=v2` (default) | Current master — 4 themes, blog, projects, comments | `archive/v2/` (prebuilt) |
+| `site_version=v3` | New editorial design | `mockup-v4-editorial.html` → `dist/v3/` |
+
+No cookie (or an unknown value) renders **v2**, the current stable version. Once v3 is stable, change `DEFAULT_VERSION` in `deploy/worker.js`.
+
+The router lives in `deploy/worker.js` (copied to `dist/_worker.js`):
+
+- `/api/version?to=v1|v2|v3` sets the cookie and redirects to `/`. Values `1`, `2`, `3` are also accepted.
+- `?preview=v1|v2|v3` renders a version for one request **without changing the cookie**.
+- HTML at `/` is served with `Cache-Control: no-store` and `Vary: Cookie`.
+- `/blog`, `/blog/:id` and `/projects` serve the v2 shell so its Vue router resolves them at the same URL.
+- A small floating **v1 / v2 / v3** switcher is injected into every variant.
+
+### Branches
+
+| Branch | Contents |
+| --- | --- |
+| `main_v1` | Original v1 source, frozen at `0e7fe58` |
+| `main_v2` | Current v2 source, frozen at `efe3d27` |
+| `v3` | This versioned deployment wrapper + the new design |
+| `main` | Production — same commit as `v3` |
+
+### Build output
+
+`npm run build` does not run Vite; it assembles the frozen builds and the v3 page:
+
+```text
+dist/
+├── v1/index.html        original build        (base /v1/)
+├── v2/index.html        current master build  (base /v2/)
+├── v3/index.html        editorial design
+├── favicon.* logo.png
+└── _worker.js           cookie router + version switcher
+```
+
+`archive/v1/` and `archive/v2/` are committed Vite snapshots, so the Cloudflare build needs only one `npm install` and one `npm run build`.
+
+### Cloudflare Pages
+
+- **Build command:** `npm run build`
+- **Build output directory:** `dist`
+- **Root directory:** `/`
+
+The custom domain stays unchanged; the worker serves all three versions at `/`. Pushing to the production branch triggers the automatic deploy.
+
+To test locally:
+
+```bash
+npm run preview:deploy     # wrangler pages dev dist
+```
+
+Then open `http://localhost:8788/` and use the floating switcher.
+
+### Rebuilding an archived version
+
+```bash
+git worktree add --detach ../v1-src 0e7fe58
+cd ../v1-src && npm ci && npx vite build --base=/v1/
+rm -rf /path/to/repo/archive/v1 && cp -R dist /path/to/repo/archive/v1
+
+git worktree add --detach ../v2-src efe3d27
+cd ../v2-src && npm ci && npx vite build --base=/v2/
+rm -rf /path/to/repo/archive/v2 && cp -R dist /path/to/repo/archive/v2
+```
+
+---
+
 ## License
 
 MIT

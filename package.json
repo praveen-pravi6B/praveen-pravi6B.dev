@@ -9,8 +9,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "node scripts/build-deploy.mjs",
+    "build:source": "vite build",
+    "preview": "vite preview",
+    "preview:deploy": "npx wrangler pages dev dist",
+    "deploy": "npm run build && npx wrangler pages deploy dist --project-name praveen-portfolio"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
