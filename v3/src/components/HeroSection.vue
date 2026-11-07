@@ -1,3 +1,7 @@
+<script setup>
+const logo = `${import.meta.env.BASE_URL}logo.png`;
+</script>
+
 <template>
   <section class="hero" id="top">
     <div class="hero-top">
@@ -16,7 +20,7 @@
         </svg>
         <div class="stamp-core">
           <span class="stamp-logo"
-            ><img src="/logo.png" alt="" width="30" height="30"
+            ><img :src="logo" alt="" width="30" height="30"
           /></span>
         </div>
       </div>

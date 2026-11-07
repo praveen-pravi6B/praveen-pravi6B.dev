@@ -13,6 +13,9 @@
  *
  * `?preview=v1|v2|v3` renders a version for one request without touching the
  * cookie.
+ *
+ * `/blog` and `/blog/:id` follow the selected version: v3 serves its own
+ * editorial notes app, while v1/v2 keep the v2 shell. `/projects` stays on v2.
  */
 
 const COOKIE_NAME = "site_version";
@@ -135,11 +138,16 @@ export default {
       return serveVariant(env, request, url, version, { embed });
     }
 
-    // Routes that only exist in v2. Serve its shell without a redirect so the
-    // Vue router can resolve /blog and /blog/:id from the same URL.
+    // Blog routes follow the selected version: v3 has first-class notes pages,
+    // while v1/v2 keep the v2 shell. No redirect, so the address bar stays on
+    // /blog or /blog/:id and the client router resolves the rest.
+    if (url.pathname === "/blog" || url.pathname.startsWith("/blog/")) {
+      const blogVersion = version === "v3" ? "v3" : "v2";
+      return serveVariant(env, request, url, blogVersion, { embed });
+    }
+
+    // Projects only exist in v2.
     if (
-      url.pathname === "/blog" ||
-      url.pathname.startsWith("/blog/") ||
       url.pathname === "/projects" ||
       url.pathname.startsWith("/projects/")
     ) {
@@ -158,7 +166,11 @@ export default {
       );
     }
     if (url.pathname === "/v3/" || url.pathname === "/v3/index.html") {
-      return serveVariant(env, request, url, "v3", { embed });
+      // The v3 router is mounted at `/`, so preview it at the root instead.
+      return Response.redirect(
+        new URL(`/?preview=v3${embed ? "&embed=1" : ""}`, url.origin),
+        302
+      );
     }
 
     return env.ASSETS.fetch(request);

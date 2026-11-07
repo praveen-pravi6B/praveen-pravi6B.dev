@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import { sections } from "../data/content";
 import ThemeToggle from "./ThemeToggle.vue";
 
@@ -7,18 +9,24 @@ defineProps({
 });
 
 defineEmits(["toggle", "close"]);
+
+const route = useRoute();
+const isBlog = computed(
+  () => route.name === "blog" || route.name === "blog-post"
+);
+const logo = `${import.meta.env.BASE_URL}logo.png`;
 </script>
 
 <template>
   <header class="mobile-bar">
-    <a
+    <RouterLink
       class="brand-mark brand-mark--sm"
-      href="#top"
+      to="/"
       aria-label="Praveen Kumar — back to top"
       @click="$emit('close')"
     >
-      <img src="/logo.png" alt="" width="21" height="21" />
-    </a>
+      <img :src="logo" alt="" width="21" height="21" />
+    </RouterLink>
     <div class="bar-meta">Portfolio 2026</div>
     <ThemeToggle compact />
     <button
@@ -35,15 +43,24 @@ defineEmits(["toggle", "close"]);
 
   <div class="mobile-panel" id="mobilePanel" :aria-hidden="String(!open)">
     <nav aria-label="Mobile navigation">
-      <a
+      <RouterLink
         v-for="item in sections"
         :key="item.id"
         class="m-link"
-        :href="`#${item.id}`"
+        :to="{ path: '/', hash: `#${item.id}` }"
         @click="$emit('close')"
       >
         <span>{{ item.index }}</span>{{ item.label }}
-      </a>
+      </RouterLink>
+
+      <RouterLink
+        class="m-link"
+        to="/blog"
+        :class="{ 'is-current': isBlog }"
+        @click="$emit('close')"
+      >
+        <span>↗</span>Blog
+      </RouterLink>
     </nav>
     <div class="m-foot">
       <div>

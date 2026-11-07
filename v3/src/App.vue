@@ -1,24 +1,32 @@
 <script setup>
-import { onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import { sections } from "./data/content";
 import { useSectionSpy } from "./composables/useSectionSpy";
 
 import SiteRail from "./components/SiteRail.vue";
 import MobileChrome from "./components/MobileChrome.vue";
-import HeroSection from "./components/HeroSection.vue";
-import MarqueeStrip from "./components/MarqueeStrip.vue";
-import WorkSection from "./components/WorkSection.vue";
-import AboutSection from "./components/AboutSection.vue";
-import CapabilitiesSection from "./components/CapabilitiesSection.vue";
-import NotesSection from "./components/NotesSection.vue";
-import ContactSection from "./components/ContactSection.vue";
 
+const route = useRoute();
 const menuOpen = ref(false);
-const { active } = useSectionSpy(sections.map((section) => section.id));
+
+const { active, refresh } = useSectionSpy(
+  sections.map((section) => section.id),
+  () => route.name === "home"
+);
 
 watch(menuOpen, (open) => {
   document.body.classList.toggle("menu-open", open);
 });
+
+watch(
+  () => route.fullPath,
+  async () => {
+    menuOpen.value = false;
+    await nextTick();
+    refresh();
+  }
+);
 
 let desktopQuery;
 let onKeydown;
@@ -60,12 +68,6 @@ onBeforeUnmount(() => {
   />
 
   <main id="main">
-    <HeroSection />
-    <MarqueeStrip />
-    <WorkSection />
-    <AboutSection />
-    <CapabilitiesSection />
-    <NotesSection />
-    <ContactSection />
+    <RouterView />
   </main>
 </template>

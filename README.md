@@ -111,11 +111,13 @@ const hello = 'world'
 
 ## Routes
 
-| Route | Page |
-|-------|------|
-| `/` | Homepage — all sections |
-| `/blog` | Full blog listing with tag filter |
-| `/blog/:gistId` | Single post — full rendered markdown |
+| Route | v3 (editorial) | v1 / v2 |
+|-------|----------------|---------|
+| `/` | Homepage — hero, work, about, capabilities, notes, contact | Same as before |
+| `/blog` | Editorial note index with tag filter | v2 blog listing |
+| `/blog/:gistId` | Single note — rendered markdown + comments | v2 single post |
+
+Blog metadata comes from the published Google Sheet and article bodies from public GitHub Gists, so new posts still only need a new sheet row and a gist.
 
 ---
 
@@ -149,7 +151,8 @@ The router lives in `deploy/worker.js` (copied to `dist/_worker.js`):
 - `/api/version?to=v1|v2|v3` sets the cookie and redirects to `/`. Values `1`, `2`, `3` are also accepted.
 - `?preview=v1|v2|v3` renders a version for one request **without changing the cookie**.
 - HTML at `/` is served with `Cache-Control: no-store` and `Vary: Cookie`.
-- `/blog`, `/blog/:id` and `/projects` serve the v2 shell so its Vue router resolves them at the same URL.
+- `/blog` and `/blog/:id` follow the cookie: v3 renders its own editorial notes pages, while v1/v2 keep the v2 blog.
+- `/projects` still serves the v2 shell (v3 has no separate projects route).
 - A small floating **v1 / v2 / v3** switcher is injected into every variant.
 
 ### Branches
@@ -185,7 +188,7 @@ dist/
 To work on v3 locally:
 
 ```bash
-npm run dev:v3      # http://localhost:5173/v3/
+npm run dev:v3      # http://localhost:5173/v3/ — try /v3/blog too
 ```
 
 ### Cloudflare Pages

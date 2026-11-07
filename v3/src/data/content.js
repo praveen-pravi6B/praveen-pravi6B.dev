@@ -107,36 +107,6 @@ export const capabilities = [
   },
 ];
 
-export const notes = [
-  {
-    number: "N° 01",
-    tag: "Dev tool",
-    title: "PixelBreak: blocking bad commits before they ship",
-    excerpt:
-      "A local-first visual regression tool that catches responsive breakage before it lands.",
-    date: "Oct 2026 · 6 min",
-    href: "#",
-  },
-  {
-    number: "N° 02",
-    tag: "Local AI",
-    title: "HearWild: AI that gets you off your screen",
-    excerpt:
-      "An offline bird-sound identifier built with BirdNET, FastAPI, and a very patient Vue app.",
-    date: "Sep 2026 · 8 min",
-    href: "#",
-  },
-  {
-    number: "N° 03",
-    tag: "Essay",
-    title: "Why I build local-first",
-    excerpt:
-      "Notes on privacy, latency, and software that still works when the connection doesn't.",
-    date: "Aug 2026 · 4 min",
-    href: "#",
-  },
-];
-
 export const marqueeItems = [
   "Vue 3",
   "TypeScript",

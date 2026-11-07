@@ -2,19 +2,31 @@ import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 
 /**
  * Tracks which section is currently in the middle of the viewport so the rail
- * navigation can highlight it.
+ * navigation can highlight it. On routes without sections (the blog) the spy
+ * reports no active item.
  */
-export function useSectionSpy(ids) {
-  const active = ref(ids[0]);
+export function useSectionSpy(ids, isEnabled = () => true) {
+  const active = ref(ids[0] || "");
   let observer;
 
-  onMounted(async () => {
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+  async function refresh() {
+    await nextTick();
+
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+
+    if (
+      typeof window === "undefined" ||
+      !("IntersectionObserver" in window) ||
+      !isEnabled()
+    ) {
+      active.value = "";
       return;
     }
 
-    // Wait a tick so every section is definitely in the DOM.
-    await nextTick();
+    active.value = ids[0] || "";
 
     const elements = ids
       .map((id) => document.getElementById(id))
@@ -30,11 +42,13 @@ export function useSectionSpy(ids) {
     );
 
     elements.forEach((element) => observer.observe(element));
-  });
+  }
+
+  onMounted(refresh);
 
   onBeforeUnmount(() => {
     if (observer) observer.disconnect();
   });
 
-  return { active };
+  return { active, refresh };
 }

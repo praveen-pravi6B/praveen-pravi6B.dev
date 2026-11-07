@@ -1,5 +1,28 @@
 <script setup>
-import { notes } from "../data/content";
+import { computed, onMounted, ref } from "vue";
+import { fetchPosts } from "../services/blogService";
+
+const posts = ref([]);
+const loading = ref(true);
+
+onMounted(async () => {
+  try {
+    posts.value = (await fetchPosts()).slice(0, 3);
+  } finally {
+    loading.value = false;
+  }
+});
+
+const items = computed(() =>
+  posts.value.map((post, index) => ({
+    number: `N° 0${index + 1}`,
+    tag: post.tags[0] || "Note",
+    title: post.title,
+    excerpt: post.summary,
+    date: post.date,
+    href: `/blog/${post.gist}`,
+  }))
+);
 </script>
 
 <template>
@@ -9,18 +32,34 @@ import { notes } from "../data/content";
         <span class="sec-index">04 — Notes</span>
         <h2>Written <em>in public.</em></h2>
       </div>
-      <p class="head-note">
-        Short notes on building, local AI, and the messy middle of product
-        work.
-      </p>
+      <div class="head-links">
+        <p class="head-note">
+          Short notes on building, local AI, and the messy middle of product
+          work.
+        </p>
+        <RouterLink class="head-link" to="/blog">
+          All notes
+          <svg viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M2 6h8M6 2l4 4-4 4" />
+          </svg>
+        </RouterLink>
+      </div>
     </div>
 
-    <div class="notes-grid">
-      <a
-        v-for="note in notes"
-        :key="note.number"
+    <div v-if="loading" class="notes-grid">
+      <div v-for="n in 3" :key="n" class="note note--skeleton">
+        <span class="sk-line sk-line--short"></span>
+        <span class="sk-line sk-line--title"></span>
+        <span class="sk-line"></span>
+      </div>
+    </div>
+
+    <div v-else-if="items.length" class="notes-grid">
+      <RouterLink
+        v-for="note in items"
+        :key="note.href"
         class="note"
-        :href="note.href"
+        :to="note.href"
         v-reveal
       >
         <div class="note-top">
@@ -38,7 +77,12 @@ import { notes } from "../data/content";
             </svg>
           </span>
         </div>
-      </a>
+      </RouterLink>
     </div>
+
+    <p v-else class="state-note">
+      No notes yet. <RouterLink to="/blog">Visit the blog</RouterLink> to see
+      what lands next.
+    </p>
   </section>
 </template>
