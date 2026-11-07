@@ -4,8 +4,10 @@ import { useRoute } from "vue-router";
 import { marked } from "marked";
 import {
   asUrl,
+  fetchDevtoArticles,
   fetchGistContent,
   fetchPosts,
+  resolveDevtoUrl,
 } from "../services/blogService";
 import { usePageMeta } from "../composables/usePageMeta";
 import GiscusComments from "../components/GiscusComments.vue";
@@ -19,12 +21,12 @@ const error = ref("");
 const meta = ref(null);
 const rendered = ref("");
 const fallbackTitle = ref("");
+const devtoUrl = ref("");
 
 const title = computed(
   () => meta.value?.title || fallbackTitle.value || "Note"
 );
 
-const devtoUrl = computed(() => asUrl(meta.value?.devto));
 const mediumUrl = computed(() => asUrl(meta.value?.medium));
 
 usePageMeta(() => ({
@@ -38,13 +40,15 @@ async function load() {
   meta.value = null;
   rendered.value = "";
   fallbackTitle.value = "";
+  devtoUrl.value = "";
 
   try {
     const gistId = route.params.gistId;
 
-    const [posts, rawMarkdown] = await Promise.all([
+    const [posts, rawMarkdown, devtoArticles] = await Promise.all([
       fetchPosts(),
       fetchGistContent(gistId),
+      fetchDevtoArticles(),
     ]);
 
     meta.value = posts.find((post) => post.gist === gistId) ?? null;
@@ -53,6 +57,11 @@ async function load() {
     const heading = body.match(/^#\s+(.+)$/m);
     fallbackTitle.value = heading ? heading[1].trim() : "";
     rendered.value = marked(body);
+
+    devtoUrl.value = resolveDevtoUrl(
+      meta.value || { title: fallbackTitle.value },
+      devtoArticles
+    );
   } catch (caught) {
     error.value = caught.message ?? "Failed to load this note.";
   } finally {
@@ -104,16 +113,15 @@ watch(() => route.params.gistId, load);
 
         <p v-if="meta?.summary" class="post-summary">{{ meta.summary }}</p>
 
-        <div class="post-externals" v-if="devtoUrl || mediumUrl">
-          <span class="post-ext-label">Also published on</span>
+        <div class="post-actions" v-if="devtoUrl || mediumUrl">
           <a
             v-if="devtoUrl"
             :href="devtoUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="ext-btn"
+            class="btn btn-dark"
           >
-            DEV
+            Read at Dev.to
             <svg viewBox="0 0 16 16" aria-hidden="true">
               <path d="M4 12 12 4M5 4h7v7" />
             </svg>
@@ -123,9 +131,9 @@ watch(() => route.params.gistId, load);
             :href="mediumUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="ext-btn"
+            class="btn btn-ghost"
           >
-            Medium
+            Read on Medium
             <svg viewBox="0 0 16 16" aria-hidden="true">
               <path d="M4 12 12 4M5 4h7v7" />
             </svg>

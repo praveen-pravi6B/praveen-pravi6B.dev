@@ -70,3 +70,48 @@ export async function fetchGistContent(gistId) {
 export function asUrl(value) {
   return /^https?:\/\//i.test(value || "") ? value : "";
 }
+
+const DEVTO_USERNAME = "praveen_kumar_50c9892727f";
+const DEVTO_ARTICLES_URL = `https://dev.to/api/articles?username=${DEVTO_USERNAME}&per_page=100`;
+
+let devtoPromise;
+
+function normalizeTitle(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/\s*-\s*dev community\s*$/, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+/** Articles published by the same author on DEV. Cached for the session. */
+export async function fetchDevtoArticles() {
+  if (!devtoPromise) {
+    devtoPromise = fetch(DEVTO_ARTICLES_URL)
+      .then((response) => (response.ok ? response.json() : []))
+      .catch(() => []);
+  }
+
+  return devtoPromise;
+}
+
+/**
+ * Resolve the DEV URL for a post. The sheet sometimes stores a real URL and
+ * sometimes the DEV article title (Google Sheets drops hyperlinks in TSV), so
+ * fall back to matching against the author's published articles.
+ */
+export function resolveDevtoUrl(post, articles = []) {
+  if (!post) return "";
+
+  const direct = asUrl(post.devto);
+  if (direct) return direct;
+
+  const wanted = normalizeTitle(post.devto || post.title);
+  if (!wanted) return "";
+
+  const match = articles.find(
+    (article) => normalizeTitle(article.title) === wanted
+  );
+
+  return match?.url || "";
+}
