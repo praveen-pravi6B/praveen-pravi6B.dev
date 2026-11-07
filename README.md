@@ -140,7 +140,7 @@ Three complete versions render on the **same domain and the same URL**. A `site_
 | --- | --- | --- |
 | `site_version=v1` | Original glass portfolio | `archive/v1/` (prebuilt) |
 | `site_version=v2` (default) | Current master — 4 themes, blog, projects, comments | `archive/v2/` (prebuilt) |
-| `site_version=v3` | New editorial design | `mockup-v4-editorial.html` → `dist/v3/` |
+| `site_version=v3` | New editorial design (Vue 3 + Vite) | `v3/` → `dist/v3/` |
 
 No cookie (or an unknown value) renders **v2**, the current stable version. Once v3 is stable, change `DEFAULT_VERSION` in `deploy/worker.js`.
 
@@ -158,23 +158,35 @@ The router lives in `deploy/worker.js` (copied to `dist/_worker.js`):
 | --- | --- |
 | `main_v1` | Original v1 source, frozen at `0e7fe58` |
 | `main_v2` | Current v2 source, frozen at `efe3d27` |
-| `v3` | This versioned deployment wrapper + the new design |
+| `v3` | This versioned deployment wrapper + the Vue 3 editorial app |
 | `main` | Production — same commit as `v3` |
 
 ### Build output
 
-`npm run build` does not run Vite; it assembles the frozen builds and the v3 page:
+`npm run build` compiles the v3 Vue app, then assembles the frozen v1/v2 builds:
 
 ```text
+v3/                    Vue 3 editorial app (source)
+└── src/               components, composables, content
+
 dist/
 ├── v1/index.html        original build        (base /v1/)
 ├── v2/index.html        current master build  (base /v2/)
-├── v3/index.html        editorial design
+├── v3/index.html        Vue editorial build   (base /v3/)
+├── v3/assets/           compiled v3 JS + CSS
 ├── favicon.* logo.png
 └── _worker.js           cookie router + version switcher
 ```
 
-`archive/v1/` and `archive/v2/` are committed Vite snapshots, so the Cloudflare build needs only one `npm install` and one `npm run build`.
+`archive/v1/` and `archive/v2/` are committed Vite snapshots. Only v3 is compiled during the deploy (`npm run build:v3` → `dist-v3/` → `dist/v3/`), so the Cloudflare build still needs just one `npm install` and one `npm run build`.
+
+`mockup-v4-editorial.html` remains in the repo as the static design reference; it is no longer part of the build.
+
+To work on v3 locally:
+
+```bash
+npm run dev:v3      # http://localhost:5173/v3/
+```
 
 ### Cloudflare Pages
 

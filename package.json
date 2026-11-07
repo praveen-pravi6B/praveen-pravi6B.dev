@@ -9,7 +9,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/build-deploy.mjs",
+    "dev:v3": "vite --config vite.v3.config.js",
+    "build": "npm run build:v3 && node scripts/build-deploy.mjs",
+    "build:v3": "vite build --config vite.v3.config.js",
     "build:source": "vite build",
     "preview": "vite preview",
     "preview:deploy": "npx wrangler pages dev dist",

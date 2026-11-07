@@ -3,35 +3,29 @@
  *
  *   archive/v1/            original glass portfolio, prebuilt with base /v1/
  *   archive/v2/            current master revamp, prebuilt with base /v2/
- *   mockup-v4-editorial    new editorial design -> dist/v3/
+ *   dist-v3/               the Vue 3 editorial app, built from v3/
  *   deploy/worker.js       cookie-controlled variant router -> dist/_worker.js
  *
- * None of these require a Vite build at deploy time: v1 and v2 are frozen
- * snapshots and v3 is plain HTML. `npm run build` only assembles dist/.
+ * v1 and v2 are frozen Vite snapshots, so only v3 is compiled at deploy time
+ * (`npm run build:v3`). This script assembles the final dist/ tree.
  */
 
-import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
 const dist = path.join(root, "dist");
+const v3Build = path.join(root, "dist-v3");
 const v3Dir = path.join(dist, "v3");
 
-const NEW_DESIGN = "mockup-v4-editorial.html";
 const ARCHIVED = ["v1", "v2"];
 
-/** Make asset paths work from the nested /v3/ folder. */
-function rewriteAssetPaths(html) {
-  return html
-    .replaceAll('src="public/logo.png"', 'src="/logo.png"')
-    .replaceAll('src="public/favicon.png"', 'src="/favicon.png"')
-    .replaceAll('href="public/favicon.png"', 'href="/favicon.png"');
-}
-
 async function main() {
-  if (!existsSync(path.join(root, NEW_DESIGN))) {
-    throw new Error(`Missing ${NEW_DESIGN} — cannot build the v3 variant.`);
+  if (!existsSync(path.join(v3Build, "index.html"))) {
+    throw new Error(
+      "Missing dist-v3/index.html — run `npm run build:v3` before assembling."
+    );
   }
 
   for (const version of ARCHIVED) {
@@ -55,10 +49,9 @@ async function main() {
     });
   }
 
-  // 3. The selected design becomes the v3 variant served at `/`.
+  // 3. The Vue 3 editorial app becomes the v3 variant served at `/`.
   await mkdir(v3Dir, { recursive: true });
-  const newDesign = await readFile(path.join(root, NEW_DESIGN), "utf8");
-  await writeFile(path.join(v3Dir, "index.html"), rewriteAssetPaths(newDesign));
+  await cp(v3Build, v3Dir, { recursive: true });
 
   // 4. Pages router (advanced mode).
   await cp(
@@ -68,7 +61,7 @@ async function main() {
 
   console.log("✓ archive/v1 → dist/v1");
   console.log("✓ archive/v2 → dist/v2");
-  console.log(`✓ ${NEW_DESIGN} → dist/v3/index.html`);
+  console.log("✓ dist-v3 → dist/v3");
   console.log("✓ deploy/worker.js → dist/_worker.js");
 }
 
